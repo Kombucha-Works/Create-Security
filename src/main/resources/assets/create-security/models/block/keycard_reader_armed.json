@@ -1,0 +1,7 @@
+{
+  "parent": "create-security:block/keycard_reader",
+  "textures": {
+    "texture": "create-security:block/keycard_reader_armed",
+    "particle": "create-security:block/keycard_reader_armed"
+  }
+}

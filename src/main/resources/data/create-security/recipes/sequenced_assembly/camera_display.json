@@ -1,0 +1,110 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:industrial_iron_block"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "create-security:camera_display"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        },
+        {
+          "item": "minecraft:glass_pane"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_display"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "create-security:incomplete_camera_display"
+  }
+}

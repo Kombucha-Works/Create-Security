@@ -1,0 +1,62 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:iron_sheet"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "create-security:portable_camera_display"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_portable_camera_display"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_portable_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_portable_camera_display"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_portable_camera_display"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_portable_camera_display"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_portable_camera_display"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "create-security:incomplete_portable_camera_display"
+  }
+}

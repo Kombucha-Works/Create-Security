@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "create-security:block/camera_link"
+    },
+    "facing=east": {
+      "model": "create-security:block/camera_link",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "create-security:block/camera_link",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create-security:block/camera_link",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "create-security:block/monitor"
+    },
+    "facing=east": {
+      "model": "create-security:block/monitor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "create-security:block/monitor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create-security:block/monitor",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+	"textures": {
+		"back": "create:block/industrial_iron_block",
+		"particle": "#back"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 1],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 14]},
+			"faces": {
+				"east": {"uv": [0, 0, 15, 16], "texture": "#back"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#back"},
+				"west": {"uv": [15, 0, 0, 16], "texture": "#back"},
+				"up": {"uv": [16, 15, 0, 0], "texture": "#back"},
+				"down": {"uv": [16, 0, 0, 15], "texture": "#back"}
+			}
+		}
+	]
+}

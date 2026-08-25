@@ -1,0 +1,29 @@
+{
+	"required": true,
+	"package": "kombuchamc.createsecurity.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"GameRendererMixin",
+		"CameraAccessor",
+		"MinecraftClientAccessor",
+		"WorldRendererAccessor",
+		"GameRendererAccessor",
+		"CameraUpdateMixin",
+		"GameRendererProjMixin",
+		"GameRendererHandMixin",
+		"BackgroundRendererMixin",
+		"WorldRendererSortMixin",
+		"WorldRendererBfsMixin",
+		"ChunkInfoAccessor",
+		"BuiltChunkStorageAccessor",
+		"LivingEntityRendererLabelMixin",
+		"ClientInteractionReaderMixin",
+		"ClientBlockBreakReaderMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

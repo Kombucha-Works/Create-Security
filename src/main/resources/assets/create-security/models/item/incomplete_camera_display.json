@@ -1,0 +1,120 @@
+{
+	"textures": {
+		"particle": "create:block/industrial_iron_block",
+		"iron": "create:block/industrial_iron_block",
+		"brass": "create:block/brass_block"
+	},
+	"elements": [
+		{
+			"name": "back_wall",
+			"from": [0, 0, 14],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#iron"},
+				"east": {"uv": [16, 0, 14, 16], "texture": "#iron"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#iron"},
+				"west": {"uv": [2, 0, 0, 16], "texture": "#iron"},
+				"up": {"uv": [0, 2, 16, 0], "texture": "#iron"},
+				"down": {"uv": [16, 14, 0, 16], "texture": "#iron"}
+			}
+		},
+		{
+			"name": "bottom_wall",
+			"from": [0, 0, 0],
+			"to": [16, 2, 14],
+			"faces": {
+				"north": {"uv": [0, 14, 16, 16], "texture": "#iron"},
+				"east": {"uv": [14, 14, 0, 16], "texture": "#iron"},
+				"west": {"uv": [16, 14, 2, 16], "texture": "#iron"},
+				"up": {"uv": [0, 0, 16, 14], "texture": "#iron"},
+				"down": {"uv": [0, 2, 16, 16], "texture": "#iron"}
+			}
+		},
+		{
+			"name": "top_wall",
+			"from": [0, 14, 0],
+			"to": [16, 16, 14],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 2], "texture": "#iron"},
+				"east": {"uv": [14, 0, 0, 2], "texture": "#iron"},
+				"west": {"uv": [16, 0, 2, 2], "texture": "#iron"},
+				"up": {"uv": [0, 0, 16, 14], "texture": "#iron"},
+				"down": {"uv": [0, 0, 16, 14], "texture": "#iron"}
+			}
+		},
+		{
+			"name": "left_wall",
+			"from": [0, 2, 0],
+			"to": [2, 14, 14],
+			"faces": {
+				"north": {"uv": [14, 2, 16, 14], "texture": "#iron"},
+				"east": {"uv": [0, 2, 14, 14], "texture": "#iron"},
+				"west": {"uv": [0, 2, 14, 14], "texture": "#iron"}
+			}
+		},
+		{
+			"name": "right_wall",
+			"from": [14, 2, 0],
+			"to": [16, 14, 14],
+			"faces": {
+				"north": {"uv": [0, 2, 2, 14], "texture": "#iron"},
+				"east": {"uv": [14, 2, 0, 14], "texture": "#iron"},
+				"west": {"uv": [2, 2, 16, 14], "texture": "#iron"}
+			}
+		},
+		{
+			"name": "inner_mechanism",
+			"from": [5, 2, 9],
+			"to": [11, 9, 14],
+			"faces": {
+				"north": {"uv": [5, 7, 11, 14], "texture": "#brass"},
+				"east": {"uv": [9, 7, 14, 14], "texture": "#brass"},
+				"west": {"uv": [2, 7, 7, 14], "texture": "#brass"},
+				"up": {"uv": [5, 2, 11, 7], "texture": "#brass"}
+			}
+		},
+		{
+			"name": "inner_core",
+			"from": [7, 4, 5],
+			"to": [9, 7, 9],
+			"faces": {
+				"north": {"uv": [7, 6, 9, 9], "texture": "#iron"},
+				"east": {"uv": [5, 6, 9, 9], "texture": "#iron"},
+				"west": {"uv": [7, 6, 11, 9], "texture": "#iron"},
+				"up": {"uv": [7, 5, 9, 9], "texture": "#iron"},
+				"down": {"uv": [7, 7, 9, 11], "texture": "#iron"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-119.93, 44.53, -169.43],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-119.93, 44.53, -169.43],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [-180, 45, -180],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-180, 45, -180],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 135, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

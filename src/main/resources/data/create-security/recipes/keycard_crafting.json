@@ -1,0 +1,17 @@
+{
+  "type": "create-security:keycard",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "result": {
+    "item": "create-security:keycard"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "alarm": {
+    "subtitle": "sounds.create-security.alarm",
+    "sounds": [
+      "create-security:alarm"
+    ]
+  }
+}

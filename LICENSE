@@ -1,0 +1,509 @@
+# Kombucha-Protection-License Version 1.5
+
+Copyright (C) 2026 Lukas Mundier
+
+This license is based on the structure and concepts of the GNU General
+Public License version 3 (GPL-3.0), published by the Free Software
+Foundation. It reuses several of GPL-3.0's core ideas — copyleft,
+mandatory source disclosure, and disclaimer of warranty — but modifies
+the redistribution and commercial-use terms. **For avoidance of any doubts, this is not the GPL-3.0,
+it is not endorsed by the Free Software Foundation, and is not an
+OSI-approved open source license.** Do not interpret software under this
+license as "GPL" or "GPL-3.0."
+
+---
+
+## 0. Definitions/Preambule
+
+- **"The Mod"** refers to this software as released by the Author,
+  including its source code, compiled/binary forms, and any assets
+  (textures, models, sounds, configuration files, documentation)
+  distributed with it.
+
+- **"Covered Work"** means the Mod or any Modified Version of it, in
+  whole or in substantial part, in source or binary form.
+
+- **"You"** refers to any individual or entity exercising rights under
+  this license.
+
+- **"The Author"** refers to the original copyright holder(s) of the
+  Mod, named above. Where this license requires the Author's
+  permission, only the Author — not the developer of any Modified
+  Version, and not any other party — may grant it.
+
+- **"Substantive Modification"** means a change to the Mod that adds,
+  removes, or meaningfully alters functionality, features, behavior,
+  compatibility, or content, and that a reasonable person would
+  regard as having genuine independent value to users beyond
+  qualifying the work for Distribution under this license.
+
+  The following are never Substantive Modifications, alone or in
+  combination: renaming files, classes, variables, or the mod itself;
+  changing version strings, metadata, branding, credits, default
+  configuration values, or cosmetic details of trivial scope;
+  recompiling, repackaging, re-obfuscating, minifying, or
+  re-formatting the code; translating comments or documentation;
+  adding non-functional code, unused assets, or filler content; or
+  disabling, stubbing, or trivially toggling existing features.
+
+  **Anti-circumvention rule**: a change whose primary purpose is to
+  cause a work to qualify as a Modified Version, or otherwise to evade
+  Section 2, 4, or 5, is not a Substantive Modification, regardless of
+  its technical nature. The burden of proving that a
+  modification is Substantive lies with the person Distributing the
+  work.
+
+- **"Unmodified Copy"** means a Covered Work that contains no
+  Substantive Modification relative to a release by the Author.
+
+- **"Modified Version"** means a work based on the Mod that contains
+  at least one Substantive Modification relative to the Mod as
+  released by the Author. A verbatim or substantively identical copy
+  of someone else's Modified Version is a copy of that Modified
+  Version, and its Distribution is governed by Section 3, including
+  the attribution obligations to both the Author and that Modified
+  Version's developer.
+
+- **"Major Derivative"** means a Modified Version whose Substantive
+  Modifications constitute substantial independent engineering or
+  creative work by its developer, such as: (a) a port to a different
+  mod loader or framework (for example, between Forge, NeoForge,
+  or Quilt) requiring significant reimplementation; (b) a port
+  to a different game, game edition, or platform; (c) a maintained
+  continuation or rewrite across a major game-version boundary
+  requiring significant reimplementation; or (d) the addition of
+  substantial original features or content that (i) required
+  independent creative or engineering effort comparable to the
+  foregoing, (ii) constitutes the primary value of the Modified
+  Version to its users beyond that of the original Mod, and (iii) was
+  authored by the developer claiming Major Derivative status (bundled
+  third-party code, libraries, assets, or bulk procedurally-generated
+  content do not count toward this threshold). Minor patches,
+  configuration changes, small feature additions, and ports achieved
+  chiefly through automated remapping, transpilation, or existing
+  compatibility layers do not qualify. In case of dispute, the
+  burden of proving Major Derivative status lies with the
+  developer claiming it.
+
+  The "developer" of a Major Derivative may be an individual, an
+  informal team, or a legal entity; where it is a team or entity, the
+  rights this license grants to that developer are held by the team or
+  entity as a whole and may be exercised by members acting on its
+  behalf, but remain non-transferable to anyone outside it.
+
+- **"Authorized Platform"** means a distribution platform, website,
+  launcher, or hosting service (for example, CurseForge or Modrinth)
+  on which the Author has officially published the Mod and continues
+  to make it publicly available. Whether a platform is an Authorized
+  Platform is determined per platform, not per company or brand: a
+  platform on which the Author has not published the Mod is not an
+  Authorized Platform even if the Author has published the Mod
+  elsewhere. A platform ceases to be an Authorized Platform,
+  prospectively, when the Author removes the Mod from it or publicly
+  declares it unauthorized. The Author may maintain a list of
+  Authorized Platforms on the Mod's official project page or
+  repository; where such a list exists, it is authoritative.
+
+- **"Distribute"** means to make a Covered Work available to any third
+  party, whether publicly or within any group, platform, server,
+  repository, launcher, or community, in source or binary form,
+  whether or not for compensation. Private Sharing (defined below) and
+  Server Operation (defined below) are not Distribution.
+
+- **"Private Sharing"** means providing a copy of a Covered Work, free
+  of any charge, to no more than 10 individuals in total within any
+  rolling twelve-month period, each of whom is identified to you by
+  name and is actively engaged with you in joint development, testing,
+  or code review of that work. This cap counts every individual who
+  receives a copy during the period, whether or not they remain a
+  collaborator; rotating, replacing, or cycling recipients does not
+  reset it. Private Sharing conveys "no right to share further":
+  recipients may not Distribute or further privately share the copy,
+  and must obtain any further rights under this license directly
+  (e.g., by obtaining the work from an authorized public source).
+  Posting a copy in any channel, group, server, or repository
+  accessible to persons beyond those named individuals is
+  Distribution, not Private Sharing.
+
+- **"Server Operation"** means running a Covered Work on a game
+  server, host, or service such that third parties interact with its
+  functionality. Server Operation includes automatically transmitting
+  an exact copy of the Covered Work, as obtained from an authorized
+  source, to a player's client solely to enable that player to
+  connect to and play on that server (for example, via a server
+  resource/mod sync system, launcher profile, or connection-time
+  download). Such transmission is not Distribution and is not
+  prohibited Compensation even if the server itself charges for
+  access, provided the copy is not otherwise charged for, gated,
+  modified, rebranded, or made available for general download beyond
+  what connecting to the server requires.
+
+- **"Compensation"** means money or anything of monetary value,
+  including sale proceeds, fees, subscriptions, mandatory donations,
+  paywalled or tiered access, early-access privileges, advertising or
+  affiliate revenue attributable to hosting or linking the work,
+  platform creator revenue-share payments, and in-kind consideration.
+
+- **"Complete Corresponding Source"** means the preferred form of the
+  work for making modifications to it, including all source code,
+  original (non-flattened, non-baked) asset files where they exist,
+  build scripts, and instructions sufficient for a competent developer
+  to build the distributed binary. Obfuscated, transpiled, decompiled,
+  or partial source does not qualify.
+
+- **"Written Permission"** means an explicit, recorded grant of
+  permission from the Author, identifying the grantee and the specific
+  acts permitted. Written Permission is non-transferable, applies only
+  to the acts it explicitly states, and may contain conditions. The
+  Author may maintain a public record of grants at
+  https://github.com/Kombucha-Works/Create-Security/blob/main/Author's%20Grants;
+  a claimed grant that the Author disputes and that does not
+  appear in that record (where one is maintained) is presumed invalid.
+  A forged or misattributed grant is void and conveys nothing.
+
+## 1. Basic Permissions
+
+You are free to, provided that all terms and condition stated herein will be fullfilled:
+
+- Download, install, and use the Mod for any personal purpose.
+- View, study, and modify the source code, and patch, edit, or
+  reconfigure binary forms, for your own use.
+- Engage in Private Sharing as defined in Preambule.
+- Engage in Server Operation, including on servers that charge for
+  access or are otherwise monetized, provided you do not charge for,
+  or condition anything of value on, providing copies of the Covered
+  Work's files themselves.
+- Quote short excerpts of the source code for the purposes of
+  commentary, education, tutorials, compatibility documentation, or
+  review, with attribution.
+
+These permissions are granted royalty-free and do not expire, provided
+you comply with the all terms and conditions mentioned in this license.
+
+## 2. Distribution of Unmodified Copies
+
+You may not Distribute an Unmodified Copy without prior Written
+Permission from the Author. This includes, without limitation:
+
+- Re-uploading or mirroring the Mod on any website, platform,
+  launcher, repository, or file host.
+- Bundling the Mod into modpacks, plugin collections, launchers, or
+  server distributions, except as expressly permitted by the
+  modpack bundling permission in Section 5.
+- Distributing works whose only changes are non-substantive (see
+  Preambule above) — such works are Unmodified Copies regardless of
+  superficial differences, renaming, or repackaging.
+
+For inclusion in a free modpack distributed on an Authorized
+Platform, no Written Permission is required — see the modpack
+bundling permission in Section 5. For any other mirroring or bundling
+of an Unmodified Copy (for example, archival re-hosting, or modpack
+distribution on a platform where the Author has not published the
+Mod), contact the Author to request Written Permission.
+
+**Sunset (abandonment) provision:** if, for a continuous period of
+three (3) years, the Author has (a) published no release, update, or public
+statement regarding the Mod, and (b) been unreachable despite
+reasonable, documented attempts at contact through the channels listed
+in the Mod's official repository or project page, then Written
+Permission is deemed granted to all persons to Distribute Unmodified
+Copies of the Mod, free of any charge and subject to Sections 3(c),
+3(e), and 4. This deemed permission terminates prospectively — without
+affecting copies already Distributed under it — if the Author returns
+and publicly revokes it. Nothing in this license transfers copyright
+or any other right reserved to the Author.
+
+## 3. Distribution of Modified Versions
+
+You may Distribute a Modified Version — whether one you created or a
+verbatim copy of one created by someone else — free of any
+Compensation (except as Section 4 expressly permits for the developer
+of a Major Derivative), without prior permission, provided that
+all of the following conditions are met:
+
+a. **Source availability** — You must make the Complete Corresponding
+   Source of the Modified Version available (i) at no charge beyond
+   reasonable physical distribution costs, (ii) from the same location
+   and by the same general means as the binary, (iii) beginning no
+   later than the moment the binary is first made available, and
+   (iv) for as long as you continue to offer the binary. Access to the
+   source may not be conditioned on payment, registration beyond a
+   hosting platform's ordinary free account, surveys, ad-gates, or any
+   barrier prohibited by Section 4.
+
+b. **Documented changes** — You must clearly state that the work is
+   modified and provide a reasonably detailed, accurate description of
+   the Substantive Modifications, in the source code, a changelog, or
+   accompanying documentation. If you are redistributing someone
+   else's Modified Version, you must preserve their change
+   documentation.
+
+c. **Attribution** — You must retain a clear, visible credit to the
+   Author as the creator of the original Mod, including a link to (or
+   citation of) the original source repository, in both the source
+   code and any user-facing description (e.g., project page, mod
+   description, README). If Distributing someone else's Modified
+   Version, you must also retain that developer's credits. You must
+   not present any Covered Work in a way that implies it is the
+   original Mod or is endorsed by the Author.
+
+d. **License pass-through** — The Modified Version must be licensed in
+   its entirety under this same license, including these same
+   restrictions on Compensation and on Unmodified Copies. You may not
+   add terms that remove, narrow, or conflict with any term of this
+   license. This requirement applies to the Modified Version itself;
+   it does not extend to independent works aggregated with it (see
+   Section 5).
+
+e. **Notices preserved** — You must keep intact all copyright notices
+   and this full license text in any copy or substantial portion of a
+   Covered Work you Distribute.
+
+For the avoidance of doubt: the developer of a Modified Version
+acquires no authority to grant any permission reserved to the Author
+(including permission to receive Compensation or to Distribute
+Unmodified Copies), whether for the original Mod, their own Modified
+Version, or anyone else's. The only exception is the limited,
+personal, non-transferable monetization right that Section 4 grants
+directly to the developer of a Major Derivative for that Major
+Derivative; that right is granted by this license itself, not by the
+developer, and conveys no authority to license or permit anything to
+anyone else.
+
+## 4. No Commercial Exploitation Without Permission
+
+Without prior Written Permission from the Author, no Covered Work may
+be provided to any third party — whether by Distribution, Private
+Sharing, or any other transfer — in exchange for Compensation, nor
+may access to it be used to generate Compensation. Prohibited conduct
+includes, without limitation:
+
+- Selling a Covered Work or licensing it for a fee, publicly or
+  privately, including delivering a commissioned or custom-built
+  Modified Version to a paying person or entity (see the development-services
+  exception below).
+- Placing a Covered Work, or its download or source, behind any
+  paywall, subscription, "supporter-only" or early-access tier, or
+  mandatory donation.
+- Distributing download links monetized through advertising
+  link-shorteners, ad-gates, survey-gates, or similar
+  revenue-generating intermediaries.
+- Hosting or linking a Covered Work's download on a website or page
+  that you operate or control and that is monetized through
+  advertising, affiliate links, or sponsorship, where such revenue is
+  attributable in whole or in part to the Covered Work.
+- Enrolling a Covered Work in, or receiving payment from, any platform
+  creator revenue-share, points, or payout program. Only the Author —
+  and the developer of a Major Derivative, as provided below — may
+  receive such payments.
+- Bundling a Covered Work into any paid modpack, plugin collection,
+  launcher, or server product.
+- Conditioning access to a Covered Work on the purchase of any product
+  or service.
+
+The following are not prohibited by this Section:
+
+- Incidental advertising revenue earned by an independent third-party
+  hosting platform on its own pages, where no payment or revenue share
+  flows to the uploader and access to the work is free and
+  unconditioned.
+- Voluntary, non-mandatory donations to the developer of a Modified
+  Version, provided access to the Modified Version and its Complete
+  Corresponding Source is in no way conditioned on, accelerated by, or
+  enhanced by donating.
+- Major Derivative monetization: the developer of a Major
+  Derivative may, for their own public releases of that Major
+  Derivative only, enroll in and receive payment from a hosting
+  platform's creator revenue-share, points, or payout program, and
+  receive voluntary donations, provided that: (i) the Major Derivative
+  and its Complete Corresponding Source remain available free of
+  charge and unconditioned — no paywall, sale, subscription, tier,
+  early access, ad-gate, link-shortener, or barrier of any kind;
+  (ii) all conditions of Section 3 are met, including attribution to
+  the Author; and (iii) the work genuinely qualifies as a Major
+  Derivative under the Preambule. This permission is personal to the
+  developer who performed the qualifying work and is
+  non-transferable: it does not extend to redistributors or mirrors of
+  the Major Derivative, does not attach to further Modified Versions
+  made by others, and does not permit selling copies, paid bundles, or
+  any conduct otherwise prohibited by this Section.
+- Paid development services: being paid for the labor of
+  developing a Substantive Modification, provided that the resulting
+  Modified Version, with its Complete Corresponding Source, is made
+  publicly available under Section 3 at no charge no later than it is
+  delivered to the paying person or entity, and they are charged for the
+  development work only, not for the copy or for exclusive access.
+- Server Operation as permitted by Section 1.
+- Showcases, reviews, and links: creating monetized commentary,
+  reviews, tutorials, videos, streams, or articles about a Covered
+  Work, and linking (without an ad-gate, link-shortener, or similar
+  intermediary) to the Author's official download page or to any
+  Distribution that complies with this license. Such linking is
+  neither Distribution nor prohibited Compensation. This safe harbor
+  does not extend to hosting the work's files yourself.
+- Anything done by the Author.
+
+Only the Author may grant permission under this license, for the Mod
+and for all Modified Versions alike.
+
+## 5. Aggregates (Modpacks and Compilations)
+
+Inclusion of a Covered Work in a compilation, modpack, launcher, or
+distribution alongside separate and independent works does not cause
+this license to apply to those other works ("mere aggregation").
+However:
+
+- The copy of the Covered Work within the aggregate must itself fully
+  comply with this license: Written Permission if it is an Unmodified
+  Copy (Section 2) — except as the modpack bundling permission below
+  provides — the conditions of Section 3 if it is a Modified Version,
+  and Section 4 in all cases.
+
+- Modpack bundling permission (Authorized Platforms only):
+  Notwithstanding Section 2, you may include an Unmodified Copy of
+  the Mod in a modpack, and Distribute that modpack, without Written
+  Permission, provided all of the following are met:
+
+  a. Platform restriction — the modpack is Distributed solely on
+     or through one or more Authorized Platforms, including via such
+     a platform's native modpack, dependency, or file-reference
+     mechanism. This permission does not extend to distributing the
+     modpack, or the Mod within it, on or through any platform that
+     is not an Authorized Platform, even if the modpack is also
+     available on an Authorized Platform.
+
+  b. Provenance — the included copy is an exact, unmodified copy
+     of a release the Author published on an Authorized Platform, or
+     is referenced or fetched from the Author's official publication
+     there (as with dependency-based pack formats) rather than
+     re-hosted. Referencing the official file rather than embedding a
+     copy is preferred where the platform supports it.
+
+  c. Free and unconditioned — the modpack is available free of
+     charge and without any barrier prohibited by Section 4. Section
+     4 fully applies; the aggregate revenue-share carve-out below
+     remains available on its own terms.
+
+  d. Attribution — the modpack's public listing or documentation
+     credits the Author as the creator of the Mod and links to the
+     Mod's official page on an Authorized Platform, and does not
+     imply the Author endorses the modpack.
+
+  e. Currency — if a platform ceases to be an Authorized Platform
+     (see Preambule), this permission terminates prospectively for
+     that platform: copies of the modpack already Distributed there
+     are unaffected, but you may not publish new versions or updates
+     of the modpack containing the Mod on that platform, and should
+     remove or update existing listings within a reasonable time
+     where the platform permits.
+
+  This permission covers inclusion in a genuine aggregate of multiple
+  independent works. It does not authorize standalone re-uploads or
+  mirrors of the Mod presented as a "modpack," nor a pack whose
+  primary content or selling point is the Mod itself; those remain
+  governed by Section 2.
+- If the aggregate as a whole is sold, paywalled, tiered, or otherwise
+  monetized, the inclusion of the Covered Work in it is prohibited by
+  Section 4 regardless of how the price is nominally allocated.
+- Aggregate revenue-share carve-out:platform creator
+  revenue-share, points, or payout payments earned by the author of a
+  free, unconditioned aggregate (such as a modpack) for the aggregate
+  as a whole are not prohibited Compensation with respect to a Covered
+  Work included in it, provided the Covered Work is one component
+  among multiple independent works, is itself freely available, and is
+  included in compliance with this license. This carve-out does not
+  apply where the Covered Work is the aggregate's primary content or
+  selling point, and does not permit any conduct prohibited elsewhere
+  in Section 4.
+
+## 6. Anti-Circumvention
+
+You may not do indirectly, through intermediaries, superficial modifications,
+nominal collaborators, corporate or account structures, or staged
+transactions, what this license prohibits you from doing directly. Any
+arrangement whose substance is prohibited conduct is treated as that
+conduct.
+
+## 7. Contributions
+
+Unless the Author and a contributor explicitly agree otherwise in
+writing, any contribution intentionally submitted for inclusion in the
+Mod (for example, a pull request) is licensed by the contributor to
+the Author under this same license, and the contributor grants the
+Author a perpetual, worldwide, royalty-free right to use, modify,
+distribute, and relicense that contribution as part of the Mod.
+
+## 8. No Warranty
+
+THE MOD IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. TO THE MAXIMUM EXTENT
+PERMITTED BY APPLICABLE LAW,IN NO EVENT SHALL THE AUTHOR(S) BE LIABLE FOR
+ANY CLAIM, DAMAGES (INCLUDING BUT NOT LIMITED TO DIRECT,INDIRECT,
+INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, LOSS OF DATA,
+OR CORRUPTION OF WORLD SAVES), OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
+WITH THE MOD OR THE USE OR OTHER DEALINGS IN THE MOD.
+
+## 9. Termination and Cure
+
+Any violation of Sections 2, 3, 4, 5, or 6 automatically terminates
+your rights under this license.
+
+However, if you cease all violations, your license is reinstated
+(a) provisionally, unless and until the Author expressly and finally
+terminates it, and (b) permanently, if the Author fails to notify you
+of the violation by reasonable means within 60 days after the
+cessation. Moreover, your license is reinstated permanently if this is
+the first time you have received notice of violation of this license
+from the Author and you cure the violation within 30 days after
+receiving the notice.
+
+Termination of your rights does not terminate the licenses of parties
+who received copies or rights from you and who remain in compliance
+(see Section 10).
+
+## 10. Direct License From the Author
+
+Each time a Covered Work is conveyed to a recipient in compliance with
+this license, that recipient automatically receives a license directly
+from the Author to use the work and to exercise the rights in this
+license, subject to its terms. A recipient's rights do not depend on
+the continuing compliance of the party from whom they received the
+copy. A recipient who obtains a copy through a channel that violates
+this license receives no rights under Sections 2–5, but retains the
+basic usage permissions of Section 1 with respect to a lawfully
+obtained replacement copy.
+
+## 11. Severability
+
+If any provision of this license is held to be unenforceable or
+invalid, that provision shall be enforced to the maximum extent
+permissible, and the remaining provisions shall remain in full force
+and effect.
+
+## 12. Governing Law
+
+This license shall be governed by and construed in
+accordance with the laws of the Slovak Republic, without regard to its
+conflict-of-laws rules.
+
+## 13. Entire License; No Implied Rights
+
+This license is the complete statement of the rights granted. Any
+right not expressly granted here is reserved by the Author. Nothing in
+this license shall be construed as granting any rights to the Author's
+name, branding, or trademarks, or as limiting any rights you may have
+under applicable law that cannot be limited by license (such as fair
+use / fair dealing).
+
+## 14. Acknowledgment
+
+This license's structure — including its copyleft (license
+pass-through) requirement, mandatory source disclosure for modified
+works, cure-and-reinstatement mechanism, and disclaimer of warranty —
+is adapted from the GNU General Public License version 3, published by
+the Free Software Foundation
+(https://www.gnu.org/licenses/gpl-3.0.html). The GPL-3.0 itself is not
+applied to this Mod; this is an independent license.
+

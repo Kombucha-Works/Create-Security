@@ -1,0 +1,20 @@
+{
+	"textures": {
+		"texture": "create:block/industrial_iron_block"
+	},
+	"elements": [
+		{
+			"from": [14, 14, 0],
+			"to": [16, 16, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 14, 0]},
+			"color": 4,
+			"faces": {
+				"north": {"uv": [0, 0, 2, 2], "texture": "#texture"},
+				"east": {"uv": [15, 0, 16, 2], "texture": "#texture"},
+				"west": {"uv": [0, 0, 1, 2], "texture": "#texture"},
+				"up": {"uv": [0, 15, 2, 16], "texture": "#texture"},
+				"down": {"uv": [0, 0, 2, 1], "texture": "#texture"}
+			}
+		}
+	]
+}

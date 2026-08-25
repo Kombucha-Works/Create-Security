@@ -1,0 +1,52 @@
+{
+	"schemaVersion": 1,
+	"id": "create-security",
+	"version": "${version}",
+	"name": "Create: Security",
+	"description": "A mod that adds CCTV and a lot more security things.",
+	"authors": [
+		"SuaveHickory500",
+        "Hardstone"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/create-securiry",
+		"issues": "https://github.com/Kombucha-Works/Create-Security/issues",
+		"sources": "https://github.com/Kombucha-Works/Create-Security"
+	},
+	"license": "Kombucha-Protection-License Version 1.5",
+	"icon": "assets/create-security/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"kombuchamc.createsecurity.CreateSecurity"
+		],
+		"client": [
+			"kombuchamc.createsecurity.CreateSecurityClient"
+		],
+		"fabric-datagen": [
+			"kombuchamc.createsecurity.CreateSecurityDataGenerator"
+		]
+	},
+	"mixins": [
+		"create-security.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.0",
+		"minecraft": "1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+        "create": "*",
+		"geckolib": "*",
+		"forgeconfigapiport": "*"
+
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.create-security.homepage": "https://modrinth.com/mod/create-securiry",
+				"modmenu.create-security.issues": "https://github.com/Kombucha-Works/Create-Security/issues"
+			},
+			"parent": "create"
+		}
+	}
+}

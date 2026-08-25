@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "create-security:camera_display",
+    "create-security:camera",
+    "create-security:alarm",
+    "create-security:monitor",
+    "create-security:camera_link"
+  ]
+}

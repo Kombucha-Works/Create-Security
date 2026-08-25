@@ -1,0 +1,54 @@
+{
+  "variants": {
+    "powered=false,facing=up": {
+      "model": "create-security:block/alarm/alarm_off"
+    },
+    "powered=false,facing=north": {
+      "model": "create-security:block/alarm/alarm_off",
+      "x": 90
+    },
+    "powered=false,facing=down": {
+      "model": "create-security:block/alarm/alarm_off",
+      "x": 180
+    },
+    "powered=false,facing=south": {
+      "model": "create-security:block/alarm/alarm_off",
+      "x": 270
+    },
+    "powered=false,facing=east": {
+      "model": "create-security:block/alarm/alarm_off",
+      "x": 90,
+      "y": 90
+    },
+    "powered=false,facing=west": {
+      "model": "create-security:block/alarm/alarm_off",
+      "x": 90,
+      "y": 270
+    },
+    "powered=true,facing=up": {
+      "model": "create-security:block/alarm/alarm_on"
+    },
+    "powered=true,facing=north": {
+      "model": "create-security:block/alarm/alarm_on",
+      "x": 90
+    },
+    "powered=true,facing=down": {
+      "model": "create-security:block/alarm/alarm_on",
+      "x": 180
+    },
+    "powered=true,facing=south": {
+      "model": "create-security:block/alarm/alarm_on",
+      "x": 270
+    },
+    "powered=true,facing=east": {
+      "model": "create-security:block/alarm/alarm_on",
+      "x": 90,
+      "y": 90
+    },
+    "powered=true,facing=west": {
+      "model": "create-security:block/alarm/alarm_on",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

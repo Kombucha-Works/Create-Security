@@ -1,0 +1,358 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/camera_display"
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/camera_display",
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/camera_display",
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/camera_display",
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_up"
+      },
+      "when": {
+        "facing": "north",
+        "up": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_up",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "up": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_up",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "up": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_up",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "up": true
+      }
+    },
+
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_down"
+      },
+      "when": {
+        "facing": "north",
+        "down": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_down",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "down": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_down",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "down": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_down",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "down": true
+      }
+    },
+
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_right"
+      },
+      "when": {
+        "facing": "north",
+        "right": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_right",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "right": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_right",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "right": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_right",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "right": true
+      }
+    },
+
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_left"
+      },
+      "when": {
+        "facing": "north",
+        "left": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_left",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "left": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_left",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "left": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/bar/camera_display_bar_left",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "left": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_right"
+      },
+      "when": {
+        "facing": "north",
+        "topright": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_right",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "topright": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_right",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "topright": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_right",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "topright": true
+      }
+    },
+
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_left"
+      },
+      "when": {
+        "facing": "north",
+        "topleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_left",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "topleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_left",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "topleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_up_left",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "topleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_right"
+      },
+      "when": {
+        "facing": "north",
+        "bottomright": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_right",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "bottomright": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_right",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "bottomright": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_right",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "bottomright": true
+      }
+    },
+
+
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_left"
+      },
+      "when": {
+        "facing": "north",
+        "bottomleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_left",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "bottomleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_left",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "bottomleft": true
+      }
+    },
+    {
+      "apply": {
+        "model": "create-security:block/camera_display/dot/camera_display_dot_down_left",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "bottomleft": true
+      }
+    }
+  ]
+}

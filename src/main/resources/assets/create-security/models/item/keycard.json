@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "create-security:item/keycard",
+    "layer1": "create-security:item/keycard_strip"
+  }
+}

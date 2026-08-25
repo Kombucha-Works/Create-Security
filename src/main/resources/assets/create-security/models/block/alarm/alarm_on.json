@@ -1,0 +1,7 @@
+{
+	"parent": "create-security:block/alarm/alarm_template",
+	"textures": {
+		"texture": "create-security:block/alarm_on",
+		"particle": "#texture"
+	}
+}

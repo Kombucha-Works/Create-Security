@@ -1,0 +1,20 @@
+{
+  "textures": {
+    "texture": "create-security:block/keycard_reader",
+    "particle": "create-security:block/keycard_reader"
+  },
+  "elements": [
+    {
+      "from": [5, 4, 14],
+      "to": [11, 12, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 6, 8], "texture": "#texture"},
+        "south": {"uv": [8, 0, 14, 8], "texture": "#texture"},
+        "east":  {"uv": [6, 0, 8, 8], "texture": "#texture"},
+        "west":  {"uv": [6, 0, 8, 8], "texture": "#texture"},
+        "up":    {"uv": [0, 8, 6, 10], "texture": "#texture"},
+        "down":  {"uv": [0, 8, 6, 10], "texture": "#texture"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:iron_sheet"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "create-security:camera_link"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_link"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_link"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_link"
+        },
+        {
+          "item": "minecraft:glass_pane"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_link"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_camera_link"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_camera_link"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "create-security:incomplete_camera_link"
+  }
+}

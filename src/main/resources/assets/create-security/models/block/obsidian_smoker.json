@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "front": "create-security:block/obsidian_smoker_front",
+    "side": "create-security:block/obsidian_smoker_side",
+    "top": "create-security:block/obsidian_smoker_top",
+    "bottom": "create-security:block/obsidian_smoker_bottom"
+  }
+}

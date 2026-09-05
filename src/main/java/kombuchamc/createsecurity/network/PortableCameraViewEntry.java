@@ -7,4 +7,3 @@ import org.jetbrains.annotations.Nullable;
 public record PortableCameraViewEntry(BlockPos pos, @Nullable Direction lensDir,
                                       boolean fisheye, @Nullable String label) {
 }
-

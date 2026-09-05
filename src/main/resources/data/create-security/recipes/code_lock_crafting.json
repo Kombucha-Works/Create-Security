@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SRS",
+    "IDI"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone_button"
+    },
+    "R": {
+      "item": "create:electron_tube"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "create-security:code_lock",
+    "count": 1
+  }
+}

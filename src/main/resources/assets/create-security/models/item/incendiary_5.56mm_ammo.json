@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "create-security:item/incendiary_5.56mm_ammo"
+  }
+}

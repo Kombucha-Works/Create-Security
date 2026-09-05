@@ -356,4 +356,3 @@ public class MonitorRenderer implements BlockEntityRenderer<MonitorBlockEntity> 
         matrices.pop();
     }
 }
-

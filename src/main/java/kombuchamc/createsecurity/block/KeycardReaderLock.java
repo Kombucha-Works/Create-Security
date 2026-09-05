@@ -35,8 +35,17 @@ public final class KeycardReaderLock {
         if (entry == null) return ActionResult.PASS;
 
         ItemStack stack = player.getStackInHand(hand);
-        if (player.isSneaking() && !stack.isEmpty() && !stack.isOf(RegisterModItems.KEYCARD)) {
+        boolean universal = stack.isOf(RegisterModItems.UNIVERSAL_KEYCARD);
+
+        if (player.isSneaking() && !stack.isEmpty()
+                && !stack.isOf(RegisterModItems.KEYCARD) && !universal) {
             return ActionResult.PASS;
+        }
+
+        if (entry.kind() == LockKind.CODE) {
+            return player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer
+                    ? CodeLock.onUse(serverPlayer, serverWorld, readerPos, entry)
+                    : ActionResult.PASS;
         }
         int heldCard = stack.isOf(RegisterModItems.KEYCARD) ? KeycardItem.getCardId(stack) : 0;
         boolean onPanel = KeycardReaderGeometry.isAimedAtPanel(
@@ -44,16 +53,20 @@ public final class KeycardReaderLock {
 
         if (!entry.isArmed()) {
             if (!onPanel || heldCard == 0) return ActionResult.PASS;
-            store.setCard(readerPos, heldCard);
-            ModPackets.broadcastKeycardReaderUpdate(serverWorld, readerPos, true, true);
+            store.setSecret(readerPos, heldCard);
+            ModPackets.broadcastKeycardReaderUpdate(serverWorld, readerPos, true, true, LockKind.KEYCARD);
             play(serverWorld, readerPos, SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), 1.2f);
             message(player, "message.create-security.reader_programmed", Formatting.GREEN);
             return ActionResult.SUCCESS;
         }
 
-        if (heldCard == entry.cardId()) {
+        if (universal || heldCard == entry.secret()) {
             play(serverWorld, readerPos, SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), 1.8f);
-            return openHost(player, world, hand, hit);
+            ActionResult result = openHost(player, world, hand, hit);
+            if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
+                KeycardReaderLights.opened(serverWorld, readerPos, serverPlayer);
+            }
+            return result;
         }
 
         play(serverWorld, readerPos, SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(), 0.8f);
@@ -63,8 +76,17 @@ public final class KeycardReaderLock {
         return ActionResult.FAIL;
     }
 
+    public static ActionResult openUnlocked(PlayerEntity player, World world, Hand hand, BlockHitResult hit) {
+        return openHost(player, world, hand, hit);
+    }
+
     private static ActionResult openHost(PlayerEntity player, World world, Hand hand, BlockHitResult hit) {
         BlockState state = world.getBlockState(hit.getBlockPos());
+
+        if (KeycardReaderDoors.isDoor(state) && world instanceof ServerWorld serverWorld) {
+            KeycardReaderDoors.toggleWithKeycard(serverWorld, hit.getBlockPos(), player);
+            return ActionResult.SUCCESS;
+        }
         unlocking = true;
         try {
             ActionResult result = state.onUse(world, player, hand, hit);

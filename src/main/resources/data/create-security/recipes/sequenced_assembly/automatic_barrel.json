@@ -1,0 +1,110 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:sturdy_sheet"
+  },
+  "loops": 4,
+  "results": [
+    {
+      "item": "create-security:automatic_barrel"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        },
+        {
+          "item": "create:iron_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        },
+        {
+          "item": "create:electron_tube"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        },
+        {
+          "item": "create:rose_quartz"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        },
+        {
+          "item": "minecraft:amethyst_shard"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_automatic_barrel"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "create-security:incomplete_automatic_barrel"
+  }
+}

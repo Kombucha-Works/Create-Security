@@ -29,8 +29,17 @@ public class ModBlockEntities {
                     FabricBlockEntityTypeBuilder.create(MonitorBlockEntity::new,
                             RegisterModBlocks.MONITOR).build());
 
+    public static final BlockEntityType<KeycardEditorBlockEntity> KEYCARD_EDITOR_BLOCK_ENTITY =
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(CreateSecurity.MOD_ID, "keycard_editor_be"),
+                    FabricBlockEntityTypeBuilder.create(KeycardEditorBlockEntity::new,
+                            RegisterModBlocks.KEYCARD_EDITOR).build());
+
+    public static final BlockEntityType<TurretBlockEntity> TURRET_BLOCK_ENTITY =
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(CreateSecurity.MOD_ID, "turret_be"),
+                    FabricBlockEntityTypeBuilder.create(TurretBlockEntity::new,
+                            RegisterModBlocks.TURRET).build());
+
     public static void registerBlockEntities() {
         CreateSecurity.LOGGER.info("Registering BlockEntities for" + CreateSecurity.MOD_ID);
     }
 }
-

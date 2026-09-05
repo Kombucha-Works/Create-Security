@@ -14,4 +14,3 @@ public abstract class WorldRendererSortMixin {
         return CameraViewManager.isInsideInnerRender() ? 0 : original;
     }
 }
-

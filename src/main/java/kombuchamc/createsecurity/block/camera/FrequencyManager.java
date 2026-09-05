@@ -14,11 +14,6 @@ public class FrequencyManager {
     static final Map<String, Set<BlockPos>> camerasByFrequency = new HashMap<>();
     static final Map<BlockPos, String> frequencyByCamera = new HashMap<>();
 
-    /**
-     * World time each camera was placed, kept here rather than read back off the block entity so
-     * that camera ordering stays fixed while a camera's chunk is unloaded. Persisted alongside
-     * the frequencies; see {@link FrequencyPersistentState}.
-     */
     static final Map<BlockPos, Long> placedAtByCamera = new HashMap<>();
 
     private static long revision = 0;
@@ -74,11 +69,6 @@ public class FrequencyManager {
         return camerasByFrequency.getOrDefault(frequency, Collections.emptySet());
     }
 
-    /**
-     * Cameras on a frequency in stable display order: oldest placement first, position as tiebreak.
-     * Every feed consumer must use this so "Camera 1" means the same camera on a display wall,
-     * a Monitor and the Portable Camera Display, and keeps meaning it after new cameras are placed.
-     */
     public static List<BlockPos> sortedCameras(World world, String frequency) {
         List<BlockPos> sorted = new ArrayList<>(getCamerasOnFrequency(frequency));
         adoptLegacyPlacementTimes(world, sorted);
@@ -91,11 +81,6 @@ public class FrequencyManager {
         return placedAtByCamera.getOrDefault(pos, Long.MAX_VALUE);
     }
 
-    /**
-     * Worlds saved before placement times were persisted have none on record. Take them from the
-     * block entities the first time each camera is seen, so a world is migrated once and the order
-     * then survives unloading.
-     */
     private static void adoptLegacyPlacementTimes(World world, List<BlockPos> cameras) {
         if (world == null) return;
         boolean adopted = false;
@@ -119,4 +104,3 @@ public class FrequencyManager {
         kombuchamc.createsecurity.block.camera.FrequencyPersistentState.getOrCreate(world).markDirty();
     }
 }
-

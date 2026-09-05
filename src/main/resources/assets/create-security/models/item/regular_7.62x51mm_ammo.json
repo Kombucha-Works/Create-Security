@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "create-security:item/regular_7.62x51mm_ammo"
+  }
+}

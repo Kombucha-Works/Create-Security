@@ -23,28 +23,74 @@ public class CreateSecurity implements ModInitializer {
 	public static final String MOD_ID = "create-security";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	private static final int RESYNC_DELAY_TICKS = 2;
+
+	private record DeniedBreak(net.minecraft.server.network.ServerPlayerEntity player,
+			net.minecraft.server.world.ServerWorld world, BlockPos pos, long due) {}
+
+	private static final java.util.List<DeniedBreak> DENIED_BREAKS = new java.util.ArrayList<>();
+
+	private static boolean resyncDenied(net.minecraft.world.World world,
+			net.minecraft.entity.player.PlayerEntity player, BlockPos pos) {
+		if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer
+				&& world instanceof net.minecraft.server.world.ServerWorld serverWorld) {
+			DENIED_BREAKS.add(new DeniedBreak(serverPlayer, serverWorld, pos.toImmutable(),
+					serverWorld.getTime() + RESYNC_DELAY_TICKS));
+		}
+		return false;
+	}
+
+	private static void flushDeniedBreaks() {
+		if (DENIED_BREAKS.isEmpty()) return;
+		java.util.Iterator<DeniedBreak> it = DENIED_BREAKS.iterator();
+		while (it.hasNext()) {
+			DeniedBreak denied = it.next();
+			net.minecraft.server.world.ServerWorld world = denied.world();
+			if (world.getTime() < denied.due()) continue;
+			it.remove();
+			if (denied.player().isRemoved()) continue;
+			BlockPos pos = denied.pos();
+			denied.player().networkHandler.sendPacket(
+					new net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket(world, pos));
+			net.minecraft.block.entity.BlockEntity be = world.getBlockEntity(pos);
+			net.minecraft.network.packet.Packet<net.minecraft.network.listener.ClientPlayPacketListener> update =
+					be == null ? null : be.toUpdatePacket();
+			if (update != null) denied.player().networkHandler.sendPacket(update);
+		}
+	}
+
 	@Override
 	public void onInitialize() {
 		kombuchamc.createsecurity.config.CSConfigs.register();
         RegisterModBlocks.registerModBlocks();
+        kombuchamc.createsecurity.block.obsidian.ObsidianBlocks.registerObsidianBlocks();
         RegisterModItemGroups.registerItemGropus();
         RegisterModItems.registerModItems();
 		RegisterModSounds.registerModSounds();
 		ModBlockEntities.registerBlockEntities();
+		kombuchamc.createsecurity.entity.ModEntities.registerEntities();
 		ModScreenHandlers.registerScreenHandlers();
 		ModPackets.registerServerPackets();
 		kombuchamc.createsecurity.recipe.ModRecipes.registerRecipes();
+		kombuchamc.createsecurity.block.TurretArmInteraction.register();
 
 		net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.BEFORE.register(
 				(world, player, pos, state, blockEntity) -> {
 			if (world.isClient) return true;
-			if (!kombuchamc.createsecurity.block.BlockOwnership.checkAndWarn(blockEntity, player)) return false;
+			if (kombuchamc.createsecurity.block.obsidian.ObsidianBlocks.isSecured(state)
+					&& !kombuchamc.createsecurity.block.obsidian.ObsidianProtection.canBreak(state, player, pos)) {
+				kombuchamc.createsecurity.block.obsidian.ObsidianProtection.warnNotOwner(player);
+				return resyncDenied(world, player, pos);
+			}
+			if (!kombuchamc.createsecurity.block.BlockOwnership.checkAndWarn(blockEntity, player)) {
+				return resyncDenied(world, player, pos);
+			}
 			if (world instanceof net.minecraft.server.world.ServerWorld serverWorld
 					&& kombuchamc.createsecurity.block.KeycardReaderPlacement.readerPosFor(serverWorld, pos) != null
 					&& !kombuchamc.createsecurity.block.KeycardReaderPlacement.canModify(serverWorld,
 							kombuchamc.createsecurity.block.KeycardReaderPlacement.readerPosFor(serverWorld, pos), player)) {
 				kombuchamc.createsecurity.block.KeycardReaderPlacement.warnNotOwner(player);
-				return false;
+				return resyncDenied(world, player, pos);
 			}
 			return true;
 		});
@@ -59,6 +105,12 @@ public class CreateSecurity implements ModInitializer {
 		net.fabricmc.fabric.api.event.player.AttackBlockCallback.EVENT.register(
 				(player, world, hand, pos, direction) -> {
 			if (!(world instanceof net.minecraft.server.world.ServerWorld serverWorld)) return ActionResult.PASS;
+			net.minecraft.block.BlockState attacked = world.getBlockState(pos);
+			if (kombuchamc.createsecurity.block.obsidian.ObsidianBlocks.isSecured(attacked)
+					&& !kombuchamc.createsecurity.block.obsidian.ObsidianProtection.canBreak(attacked, player, pos)) {
+				kombuchamc.createsecurity.block.obsidian.ObsidianProtection.warnNotOwner(player);
+				return ActionResult.FAIL;
+			}
 			BlockPos readerPos = kombuchamc.createsecurity.block.KeycardReaderPlacement.mountedReaderAt(serverWorld, pos, direction,
 					kombuchamc.createsecurity.block.KeycardReaderPlacement.aimPointOn(player, pos, direction));
 			if (readerPos == null) return ActionResult.PASS;
@@ -71,14 +123,24 @@ public class CreateSecurity implements ModInitializer {
 		});
 
 		net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_WORLD_TICK.register(world -> {
+			flushDeniedBreaks();
+			kombuchamc.createsecurity.block.KeycardReaderAttachment.clearPending();
+			kombuchamc.createsecurity.block.KeycardReaderDoors.tick(world);
+			kombuchamc.createsecurity.block.KeycardReaderLights.tick(world);
 			if (world.getTime() % 20 == 0) kombuchamc.createsecurity.block.KeycardReaderPlacement.validate(world);
 		});
 
 		net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
-				(handler, sender, server) -> ModPackets.sendKeycardReaderFullSync(handler.player));
+				(handler, sender, server) -> {
+					ModPackets.sendKeycardReaderFullSync(handler.player);
+					ModPackets.sendObsidianOwnerFullSync(handler.player);
+				});
 
 		net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD
-				.register((player, origin, destination) -> ModPackets.sendKeycardReaderFullSync(player));
+				.register((player, origin, destination) -> {
+					ModPackets.sendKeycardReaderFullSync(player);
+					ModPackets.sendObsidianOwnerFullSync(player);
+				});
 
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 
@@ -140,4 +202,3 @@ public class CreateSecurity implements ModInitializer {
 		});
 	}
 }
-

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOO",
+    "OXO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "create:powdered_obsidian"
+    },
+    "X": {
+      "item": "minecraft:ender_chest"
+    }
+  },
+  "result": {
+    "item": "create-security:obsidian_ender_chest",
+    "count": 1
+  }
+}

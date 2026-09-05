@@ -12,4 +12,3 @@ public interface BuiltChunkStorageAccessor {
     @Invoker("getRenderedChunk")
     ChunkBuilder.BuiltChunk invokeGetRenderedChunk(BlockPos pos);
 }
-

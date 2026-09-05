@@ -24,4 +24,3 @@ public class CameraBlockModel extends GeoModel<CameraBlockEntity> {
         return ANIMATION;
     }
 }
-

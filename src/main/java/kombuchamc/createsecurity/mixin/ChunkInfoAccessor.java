@@ -10,4 +10,3 @@ public interface ChunkInfoAccessor {
     @Accessor("chunk")
     ChunkBuilder.BuiltChunk getChunk();
 }
-

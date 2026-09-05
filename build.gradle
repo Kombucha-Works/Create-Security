@@ -39,8 +39,10 @@ dependencies {
 	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.3.1'
 	modImplementation "maven.modrinth:create-fabric:0.5.1-j-build.1631+mc1.20.1"
 
-	// Provided at runtime by Create (bundled), compile-time only here.
 	modCompileOnly "maven.modrinth:forge-config-api-port:v8.0.0-1.20.1-Fabric"
+	modCompileOnly("io.github.fabricators_of_create.Porting-Lib:base:2.3.8-beta.49+1.20.1") { transitive = false }
+	modCompileOnly("io.github.fabricators_of_create.Porting-Lib:extensions:2.3.8-beta.49+1.20.1") { transitive = false }
+	modCompileOnly("io.github.fabricators_of_create.Porting-Lib:models:2.3.8-beta.49+1.20.1") { transitive = false }
 
 }
 

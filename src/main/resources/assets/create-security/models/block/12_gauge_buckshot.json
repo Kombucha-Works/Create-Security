@@ -1,0 +1,6 @@
+{
+  "parent": "create-security:block/12_gauge_pellet",
+  "textures": {
+    "0": "create-security:item/12_gauge_buckshot"
+  }
+}

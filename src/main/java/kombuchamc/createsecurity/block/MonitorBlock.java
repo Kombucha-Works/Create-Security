@@ -215,4 +215,3 @@ public class MonitorBlock extends BlockWithEntity {
                 (world1, pos, state1, be) -> be.tick(world1, pos, state1));
     }
 }
-

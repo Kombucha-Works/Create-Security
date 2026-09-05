@@ -1,8 +1,10 @@
 package kombuchamc.createsecurity.block;
 
 import kombuchamc.createsecurity.block.entity.CameraBlockEntity;
+import kombuchamc.createsecurity.block.entity.CameraDisplayBlockEntity;
 import kombuchamc.createsecurity.block.entity.CameraLinkBlockEntity;
 import kombuchamc.createsecurity.block.entity.MonitorBlockEntity;
+import kombuchamc.createsecurity.block.entity.TurretBlockEntity;
 import kombuchamc.createsecurity.config.CSConfigs;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,8 +24,18 @@ public final class BlockOwnership {
         if (be instanceof CameraLinkBlockEntity link) {
             return link.isOwner(player) ? null : "message.create-security.not_camera_link_owner";
         }
+        if (be instanceof CameraDisplayBlockEntity display) {
+            return !display.hasOwner() || display.isOwner(player)
+                    ? null
+                    : "message.create-security.not_camera_display_owner";
+        }
         if (be instanceof MonitorBlockEntity monitor) {
             return monitor.isOwner(player) ? null : "message.create-security.not_monitor_owner";
+        }
+        if (be instanceof TurretBlockEntity turret) {
+            return !turret.hasOwner() || turret.isOwner(player)
+                    ? null
+                    : "message.create-security.not_turret_owner";
         }
         return null;
     }

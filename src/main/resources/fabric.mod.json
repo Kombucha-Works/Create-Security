@@ -9,7 +9,7 @@
         "Hardstone"
 	],
 	"contact": {
-		"homepage": "https://modrinth.com/mod/create-securiry",
+		"homepage": "https://modrinth.com/mod/create-security-cctv",
 		"issues": "https://github.com/Kombucha-Works/Create-Security/issues",
 		"sources": "https://github.com/Kombucha-Works/Create-Security"
 	},
@@ -43,7 +43,7 @@
 	"custom": {
 		"modmenu": {
 			"links": {
-				"modmenu.create-security.homepage": "https://modrinth.com/mod/create-securiry",
+				"modmenu.create-security.homepage": "https://modrinth.com/mod/create-security-cctv",
 				"modmenu.create-security.issues": "https://github.com/Kombucha-Works/Create-Security/issues"
 			},
 			"parent": "create"

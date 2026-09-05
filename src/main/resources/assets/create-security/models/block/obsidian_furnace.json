@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "create-security:block/obsidian_furnace_front",
+    "side": "create-security:block/obsidian_furnace_side",
+    "top": "create-security:block/obsidian_furnace_top"
+  }
+}

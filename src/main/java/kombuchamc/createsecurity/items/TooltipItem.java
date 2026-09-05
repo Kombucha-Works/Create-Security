@@ -1,6 +1,5 @@
 package kombuchamc.createsecurity.items;
 
-
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;

@@ -567,4 +567,3 @@ public class CameraDisplayRenderer implements BlockEntityRenderer<CameraDisplayB
         matrices.pop();
     }
 }
-

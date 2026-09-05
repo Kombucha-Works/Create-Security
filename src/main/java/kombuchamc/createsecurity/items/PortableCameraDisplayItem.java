@@ -206,4 +206,3 @@ public class PortableCameraDisplayItem extends Item {
         return result;
     }
 }
-

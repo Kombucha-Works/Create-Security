@@ -110,6 +110,14 @@ public final class KeycardReaderGeometry {
         return pos;
     }
 
+    public static List<BlockPos> panelCells(BlockView world, BlockPos pos, Direction face) {
+        if (world.getBlockState(pos).getBlock() instanceof DoorBlock) {
+            BlockPos front = hostPos(world, pos).offset(face);
+            return List.of(front, front.up());
+        }
+        return List.of(pos.offset(face));
+    }
+
     public static List<Direction> mountFaces(BlockView world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         Direction front = frontFace(state);

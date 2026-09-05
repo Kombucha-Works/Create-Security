@@ -37,18 +37,18 @@ public class KeycardItem extends Item {
 
     private static void assignTo(ItemStack stack, World world, PlayerEntity player) {
         NbtCompound nbt = stack.getNbt();
-        boolean hasId = nbt != null && nbt.contains(NBT_CARD_ID);
-        boolean hasOwner = nbt != null && nbt.contains(NBT_OWNER_NAME);
-        if (hasId && hasOwner) return;
+        if (nbt == null || !nbt.contains(NBT_CARD_ID)) {
+            stack.getOrCreateNbt().putInt(NBT_CARD_ID, 100000 + world.random.nextInt(900000));
+        }
+        assignOwner(stack, player);
+    }
 
+    public static void assignOwner(ItemStack stack, PlayerEntity player) {
+        NbtCompound nbt = stack.getNbt();
+        if (nbt != null && nbt.contains(NBT_OWNER_NAME)) return;
         NbtCompound target = stack.getOrCreateNbt();
-        if (!hasId) {
-            target.putInt(NBT_CARD_ID, 100000 + world.random.nextInt(900000));
-        }
-        if (!hasOwner) {
-            target.putString(NBT_OWNER_NAME, player.getGameProfile().getName());
-            target.putUuid(NBT_OWNER_UUID, player.getUuid());
-        }
+        target.putString(NBT_OWNER_NAME, player.getGameProfile().getName());
+        target.putUuid(NBT_OWNER_UUID, player.getUuid());
     }
 
     public static void setColor(ItemStack stack, DyeColor color) {
@@ -67,6 +67,10 @@ public class KeycardItem extends Item {
         if (color == null) return UNCOLORED_TINT;
         float[] rgb = color.getColorComponents();
         return ((int) (rgb[0] * 255f) << 16) | ((int) (rgb[1] * 255f) << 8) | (int) (rgb[2] * 255f);
+    }
+
+    public static void setCardId(ItemStack stack, int cardId) {
+        stack.getOrCreateNbt().putInt(NBT_CARD_ID, cardId);
     }
 
     public static int getCardId(ItemStack stack) {
@@ -100,7 +104,7 @@ public class KeycardItem extends Item {
         int id = getCardId(stack);
         if (owner == null && id == 0) {
             tooltip.add(Text.translatable("tooltip.create-security.keycard_unassigned")
-                    .formatted(Formatting.DARK_GRAY));
+                    .formatted(Formatting.GRAY));
             return;
         }
         if (owner != null) {
@@ -109,7 +113,7 @@ public class KeycardItem extends Item {
         }
         if (id != 0) {
             tooltip.add(Text.translatable("tooltip.create-security.keycard_id", String.valueOf(id))
-                    .formatted(Formatting.DARK_GRAY));
+                    .formatted(Formatting.GRAY));
         }
     }
 }

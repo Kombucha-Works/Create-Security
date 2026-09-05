@@ -282,4 +282,3 @@ public class PortableCameraViewScreen extends Screen {
         }
     }
 }
-

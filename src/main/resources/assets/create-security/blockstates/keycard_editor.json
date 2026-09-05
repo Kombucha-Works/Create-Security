@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "create-security:block/keycard_editor"
+    },
+    "facing=east": {
+      "model": "create-security:block/keycard_editor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "create-security:block/keycard_editor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "create-security:block/keycard_editor",
+      "y": 270
+    }
+  }
+}

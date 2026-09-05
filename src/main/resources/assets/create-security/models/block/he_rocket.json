@@ -1,0 +1,6 @@
+{
+  "parent": "create-security:block/rocket",
+  "textures": {
+    "0": "create-security:item/he_rocket"
+  }
+}

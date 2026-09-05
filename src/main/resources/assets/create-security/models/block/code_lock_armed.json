@@ -1,0 +1,7 @@
+{
+  "parent": "create-security:block/code_lock",
+  "textures": {
+    "texture": "create-security:block/code_lock_armed",
+    "particle": "create-security:block/code_lock_armed"
+  }
+}

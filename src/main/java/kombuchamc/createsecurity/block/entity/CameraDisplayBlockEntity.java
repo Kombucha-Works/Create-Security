@@ -11,6 +11,7 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
+import java.util.UUID;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -53,6 +54,8 @@ public class CameraDisplayBlockEntity extends BlockEntity implements CameraFeedV
             }
         }
     }
+
+    @Nullable private UUID ownerUUID = null;
 
     @Nullable private BlockPos linkedCameraPos = null;
 
@@ -253,9 +256,25 @@ public class CameraDisplayBlockEntity extends BlockEntity implements CameraFeedV
         CLIENT_INSTANCES.remove(this);
     }
 
+    public void setOwner(UUID uuid) {
+        this.ownerUUID = uuid;
+        markDirty();
+    }
+
+    public boolean hasOwner() {
+        return ownerUUID != null;
+    }
+
+    public boolean isOwner(net.minecraft.entity.player.PlayerEntity player) {
+        return ownerUUID != null && ownerUUID.equals(player.getUuid());
+    }
+
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
+        if (ownerUUID != null) {
+            nbt.putUuid("ownerUUID", ownerUUID);
+        }
         if (linkedCameraPos != null) {
             nbt.putLong("linkedCamera", linkedCameraPos.asLong());
         }
@@ -283,6 +302,9 @@ public class CameraDisplayBlockEntity extends BlockEntity implements CameraFeedV
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
+        BlockPos previousCamera = linkedCameraPos;
+        BlockPos previousLink = linkBlockPos;
+        ownerUUID = nbt.containsUuid("ownerUUID") ? nbt.getUuid("ownerUUID") : null;
         linkedCameraPos = nbt.contains("linkedCamera")
                 ? BlockPos.fromLong(nbt.getLong("linkedCamera"))
                 : null;
@@ -303,6 +325,12 @@ public class CameraDisplayBlockEntity extends BlockEntity implements CameraFeedV
                 : null;
         nextCameraFisheye = nbt.getBoolean("nextCameraFisheye");
         prevCameraFisheye = nbt.getBoolean("prevCameraFisheye");
+
+        if (world != null && world.isClient
+                && (!java.util.Objects.equals(previousCamera, linkedCameraPos)
+                        || !java.util.Objects.equals(previousLink, linkBlockPos))) {
+            invalidateAllClientGroups();
+        }
     }
 
     @Override
@@ -315,4 +343,3 @@ public class CameraDisplayBlockEntity extends BlockEntity implements CameraFeedV
         return BlockEntityUpdateS2CPacket.create(this);
     }
 }
-

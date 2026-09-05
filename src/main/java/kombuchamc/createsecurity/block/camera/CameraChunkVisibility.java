@@ -209,4 +209,3 @@ public final class CameraChunkVisibility {
         return storage.invokeGetRenderedChunk(np);
     }
 }
-

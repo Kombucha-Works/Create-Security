@@ -169,6 +169,17 @@ public class CameraDisplay extends BlockWithEntity {
         }
 
     @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state,
+                         @Nullable net.minecraft.entity.LivingEntity placer,
+                         net.minecraft.item.ItemStack stack) {
+        super.onPlaced(world, pos, state, placer, stack);
+        if (!world.isClient && placer instanceof net.minecraft.entity.player.PlayerEntity player
+                && world.getBlockEntity(pos) instanceof CameraDisplayBlockEntity display) {
+            display.setOwner(player.getUuid());
+        }
+    }
+
+    @Override
     public net.minecraft.util.ActionResult onUse(BlockState state, World world, BlockPos pos,
                                                  net.minecraft.entity.player.PlayerEntity player,
                                                  net.minecraft.util.Hand hand,
@@ -270,4 +281,3 @@ public class CameraDisplay extends BlockWithEntity {
         return new CameraDisplayBlockEntity(pos, state);
     }
 }
-

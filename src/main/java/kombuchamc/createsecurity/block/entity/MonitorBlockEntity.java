@@ -278,4 +278,3 @@ public class MonitorBlockEntity extends BlockEntity
         return BlockEntityUpdateS2CPacket.create(this);
     }
 }
-

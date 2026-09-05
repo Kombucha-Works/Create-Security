@@ -102,4 +102,3 @@ public interface WorldRendererAccessor {
     AtomicBoolean getUpdateFinished();
 
 }
-

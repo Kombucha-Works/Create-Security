@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOO",
+    "OXO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "create:powdered_obsidian"
+    },
+    "X": {
+      "item": "minecraft:iron_door"
+    }
+  },
+  "result": {
+    "item": "create-security:obsidian_door",
+    "count": 1
+  }
+}

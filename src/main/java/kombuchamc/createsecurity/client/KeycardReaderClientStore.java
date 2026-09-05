@@ -1,6 +1,7 @@
 package kombuchamc.createsecurity.client;
 
 import kombuchamc.createsecurity.block.KeycardReaderGeometry;
+import kombuchamc.createsecurity.block.LockKind;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.BlockPos;
@@ -16,20 +17,27 @@ import java.util.function.BiConsumer;
 @Environment(EnvType.CLIENT)
 public final class KeycardReaderClientStore {
 
-    private static final Map<BlockPos, Boolean> readers = new HashMap<>();
+    public record Mounted(boolean armed, LockKind kind, boolean unlocked) {
 
-    private KeycardReaderClientStore() {}
-
-    public static void replaceAll(List<BlockPos> positions, List<Boolean> armed) {
-        readers.clear();
-        for (int i = 0; i < positions.size(); i++) {
-            readers.put(positions.get(i), armed.get(i));
+        public boolean lit() {
+            return armed && !unlocked;
         }
     }
 
-    public static void set(BlockPos pos, boolean present, boolean armed) {
+    private static final Map<BlockPos, Mounted> readers = new HashMap<>();
+
+    private KeycardReaderClientStore() {}
+
+    public static void replaceAll(List<BlockPos> positions, List<Mounted> mounted) {
+        readers.clear();
+        for (int i = 0; i < positions.size(); i++) {
+            readers.put(positions.get(i), mounted.get(i));
+        }
+    }
+
+    public static void set(BlockPos pos, boolean present, Mounted mounted) {
         if (present) {
-            readers.put(pos.toImmutable(), armed);
+            readers.put(pos.toImmutable(), mounted);
         } else {
             readers.remove(pos);
         }
@@ -45,12 +53,12 @@ public final class KeycardReaderClientStore {
 
     public static boolean isArmedGroup(BlockView world, BlockPos pos) {
         BlockPos host = KeycardReaderGeometry.hostPos(world, pos);
-        Boolean armed = readers.get(host);
-        if (armed == null) {
+        Mounted mounted = readers.get(host);
+        if (mounted == null) {
             BlockPos partner = KeycardReaderGeometry.partner(world, host);
-            armed = partner == null ? null : readers.get(partner);
+            mounted = partner == null ? null : readers.get(partner);
         }
-        return armed != null && armed;
+        return mounted != null && mounted.armed();
     }
 
     public static boolean hasGroup(BlockView world, BlockPos pos) {
@@ -64,9 +72,9 @@ public final class KeycardReaderClientStore {
         return readers.isEmpty();
     }
 
-    public static void forEachNear(Vec3d center, double range, BiConsumer<BlockPos, Boolean> action) {
+    public static void forEachNear(Vec3d center, double range, BiConsumer<BlockPos, Mounted> action) {
         double rangeSq = range * range;
-        for (Map.Entry<BlockPos, Boolean> entry : new ArrayList<>(readers.entrySet())) {
+        for (Map.Entry<BlockPos, Mounted> entry : new ArrayList<>(readers.entrySet())) {
             if (entry.getKey().getSquaredDistance(center) > rangeSq) continue;
             action.accept(entry.getKey(), entry.getValue());
         }

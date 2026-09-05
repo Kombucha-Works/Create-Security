@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "create-security:obsidian_door",
+    "create-security:obsidian_trapdoor",
+    "create-security:obsidian_chest",
+    "create-security:obsidian_ender_chest",
+    "create-security:obsidian_barrel",
+    "create-security:obsidian_furnace",
+    "create-security:obsidian_smoker",
+    "create-security:obsidian_blast_furnace"
+  ]
+}

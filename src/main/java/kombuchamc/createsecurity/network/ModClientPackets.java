@@ -63,13 +63,18 @@ public class ModClientPackets {
                 (client, handler, buf, responseSender) -> {
                     int count = buf.readVarInt();
                     List<BlockPos> positions = new ArrayList<>(count);
-                    List<Boolean> armed = new ArrayList<>(count);
+                    List<kombuchamc.createsecurity.client.KeycardReaderClientStore.Mounted> mounted =
+                            new ArrayList<>(count);
                     for (int i = 0; i < count; i++) {
                         positions.add(buf.readBlockPos());
-                        armed.add(buf.readBoolean());
+                        boolean armed = buf.readBoolean();
+                        kombuchamc.createsecurity.block.LockKind kind =
+                                kombuchamc.createsecurity.block.LockKind.byId(buf.readByte());
+                        mounted.add(new kombuchamc.createsecurity.client.KeycardReaderClientStore.Mounted(
+                                armed, kind, buf.readBoolean()));
                     }
                     client.execute(() -> kombuchamc.createsecurity.client.KeycardReaderClientStore
-                            .replaceAll(positions, armed));
+                            .replaceAll(positions, mounted));
                 });
 
         ClientPlayNetworking.registerGlobalReceiver(ModPackets.KEYCARD_READER_UPDATE,
@@ -77,8 +82,44 @@ public class ModClientPackets {
                     BlockPos pos = buf.readBlockPos();
                     boolean present = buf.readBoolean();
                     boolean armed = buf.readBoolean();
-                    client.execute(() -> kombuchamc.createsecurity.client.KeycardReaderClientStore
-                            .set(pos, present, armed));
+                    kombuchamc.createsecurity.block.LockKind kind =
+                            kombuchamc.createsecurity.block.LockKind.byId(buf.readByte());
+                    boolean unlocked = buf.readBoolean();
+                    client.execute(() -> kombuchamc.createsecurity.client.KeycardReaderClientStore.set(
+                            pos, present,
+                            new kombuchamc.createsecurity.client.KeycardReaderClientStore.Mounted(
+                                    armed, kind, unlocked)));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.OPEN_CODE_LOCK,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos pos = buf.readBlockPos();
+                    boolean setting = buf.readBoolean();
+                    client.execute(() -> client.setScreen(
+                            new kombuchamc.createsecurity.screen.CodeLockScreen(pos, setting)));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.OBSIDIAN_OWNER_SYNC,
+                (client, handler, buf, responseSender) -> {
+                    boolean bypass = buf.readBoolean();
+                    int count = buf.readVarInt();
+                    List<BlockPos> positions = new ArrayList<>(count);
+                    List<Boolean> mine = new ArrayList<>(count);
+                    for (int i = 0; i < count; i++) {
+                        positions.add(buf.readBlockPos());
+                        mine.add(buf.readBoolean());
+                    }
+                    client.execute(() -> kombuchamc.createsecurity.client.ObsidianOwnerClientStore
+                            .replaceAll(positions, mine, bypass));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.OBSIDIAN_OWNER_UPDATE,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos pos = buf.readBlockPos();
+                    boolean present = buf.readBoolean();
+                    boolean mine = buf.readBoolean();
+                    client.execute(() -> kombuchamc.createsecurity.client.ObsidianOwnerClientStore
+                            .set(pos, present, mine));
                 });
     }
 
@@ -87,6 +128,13 @@ public class ModClientPackets {
         buf.writeBlockPos(pos);
         buf.writeBoolean(enabled);
         ClientPlayNetworking.send(ModPackets.TOGGLE_DETECTION, buf);
+    }
+
+    public static void sendCodeLockSubmit(BlockPos pos, int code) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(pos);
+        buf.writeInt(code);
+        ClientPlayNetworking.send(ModPackets.CODE_LOCK_SUBMIT, buf);
     }
 
     public static void sendPlayerListUpdate(net.minecraft.util.Hand hand, boolean includeMode,
@@ -101,4 +149,3 @@ public class ModClientPackets {
         ClientPlayNetworking.send(ModPackets.PLAYER_LIST_UPDATE, buf);
     }
 }
-

@@ -1,0 +1,41 @@
+{
+  "parent": "create-security:block/turret_gun_shotgun",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [-80, -90, -170],
+      "translation": [0, -2, -14.5],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [-100, 90, -170],
+      "translation": [0, -2, -14.5],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "firstperson_righthand": {
+      "rotation": [-110, -90, -170],
+      "translation": [2, -9, -8],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "firstperson_lefthand": {
+      "rotation": [-34.65, 83.31, 98.35],
+      "translation": [5, -9, -9.25],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "ground": {
+      "translation": [2.25, -12.5, 0],
+      "scale": [0.7, 0.7, 0.7]
+    },
+    "gui": {
+      "rotation": [26.32, 54.29, 0.37],
+      "translation": [2.25, -14, 0],
+      "scale": [0.9, 0.9, 0.9]
+    },
+    "head": {
+      "rotation": [180, -90, 180],
+      "translation": [0, -8.5, 0]
+    },
+    "fixed": {
+      "translation": [3.5, -18.75, 0]
+    }
+  }
+}

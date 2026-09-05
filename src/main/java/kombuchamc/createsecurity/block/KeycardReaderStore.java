@@ -21,11 +21,12 @@ public class KeycardReaderStore extends PersistentState {
     private static final String NBT_POS = "pos";
     private static final String NBT_OWNER = "owner";
     private static final String NBT_CARD = "card";
+    private static final String NBT_KIND = "kind";
 
-    public record Entry(BlockPos pos, @Nullable UUID owner, int cardId) {
+    public record Entry(BlockPos pos, @Nullable UUID owner, int secret, LockKind kind) {
 
         public boolean isArmed() {
-            return cardId != 0;
+            return secret != 0;
         }
     }
 
@@ -49,16 +50,16 @@ public class KeycardReaderStore extends PersistentState {
         return new ArrayList<>(readers.values());
     }
 
-    public void add(BlockPos pos, @Nullable UUID owner) {
+    public void add(BlockPos pos, @Nullable UUID owner, LockKind kind) {
         BlockPos key = pos.toImmutable();
-        readers.put(key, new Entry(key, owner, 0));
+        readers.put(key, new Entry(key, owner, 0, kind));
         markDirty();
     }
 
-    public void setCard(BlockPos pos, int cardId) {
+    public void setSecret(BlockPos pos, int secret) {
         Entry entry = readers.get(pos);
         if (entry == null) return;
-        readers.put(entry.pos(), new Entry(entry.pos(), entry.owner(), cardId));
+        readers.put(entry.pos(), new Entry(entry.pos(), entry.owner(), secret, entry.kind()));
         markDirty();
     }
 
@@ -81,7 +82,8 @@ public class KeycardReaderStore extends PersistentState {
             NbtCompound tag = new NbtCompound();
             tag.putLong(NBT_POS, entry.pos().asLong());
             if (entry.owner() != null) tag.putUuid(NBT_OWNER, entry.owner());
-            if (entry.cardId() != 0) tag.putInt(NBT_CARD, entry.cardId());
+            if (entry.secret() != 0) tag.putInt(NBT_CARD, entry.secret());
+            if (entry.kind() != LockKind.KEYCARD) tag.putInt(NBT_KIND, entry.kind().ordinal());
             list.add(tag);
         }
         nbt.put(NBT_ENTRIES, list);
@@ -95,7 +97,9 @@ public class KeycardReaderStore extends PersistentState {
             NbtCompound tag = list.getCompound(i);
             BlockPos pos = BlockPos.fromLong(tag.getLong(NBT_POS));
             UUID owner = tag.containsUuid(NBT_OWNER) ? tag.getUuid(NBT_OWNER) : null;
-            store.readers.put(pos, new Entry(pos, owner, tag.getInt(NBT_CARD)));
+
+            store.readers.put(pos, new Entry(pos, owner, tag.getInt(NBT_CARD),
+                    LockKind.byId(tag.getInt(NBT_KIND))));
         }
         return store;
     }

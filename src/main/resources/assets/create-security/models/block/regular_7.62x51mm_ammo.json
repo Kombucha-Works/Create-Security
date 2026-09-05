@@ -1,0 +1,31 @@
+{
+	"textures": {
+		"0": "create-security:item/regular_7.62x51mm_ammo"
+	},
+	"elements": [
+		{
+			"from": [5, 7, 7],
+			"to": [10, 9, 9],
+			"faces": {
+				"north": {"uv": [8, 15, 10, 10], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [8, 10, 10, 12], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [10, 10, 8, 15], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [8, 13, 10, 15], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [8, 10, 10, 15], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [8, 10, 10, 15], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"from": [10, 7.5, 7.5],
+			"to": [12, 8.5, 8.5],
+			"faces": {
+				"north": {"uv": [8, 4, 10, 5], "texture": "#0"},
+				"east": {"uv": [8, 4, 9, 5], "texture": "#0"},
+				"south": {"uv": [10, 4, 8, 5], "texture": "#0"},
+				"west": {"uv": [9, 4, 10, 5], "texture": "#0"},
+				"up": {"uv": [10, 4, 8, 5], "texture": "#0"},
+				"down": {"uv": [10, 4, 8, 5], "texture": "#0"}
+			}
+		}
+	]
+}

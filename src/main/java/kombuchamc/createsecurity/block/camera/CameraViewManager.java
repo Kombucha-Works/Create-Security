@@ -56,7 +56,6 @@ public class CameraViewManager {
     private static final double NEAR_DIST_SQ = 32.0 * 32.0;
     private static final double MID_DIST_SQ  = 64.0 * 64.0;
 
-
     private static final Map<BlockPos, Long> lastRenderNanos = new HashMap<>();
 
     private static final Set<BlockPos> renderErrorLogged = new HashSet<>();
@@ -528,4 +527,3 @@ public class CameraViewManager {
         CameraChunkVisibility.cleanup(cameraPos);
     }
 }
-

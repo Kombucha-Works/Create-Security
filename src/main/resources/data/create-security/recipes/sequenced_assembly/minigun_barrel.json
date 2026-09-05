@@ -1,0 +1,110 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "loops": 5,
+  "results": [
+    {
+      "item": "create-security:minigun_barrel"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        },
+        {
+          "item": "create:brass_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        },
+        {
+          "item": "create:cogwheel"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        },
+        {
+          "item": "create:sturdy_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        },
+        {
+          "item": "minecraft:shulker_shell"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_minigun_barrel"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "create-security:incomplete_minigun_barrel"
+  }
+}

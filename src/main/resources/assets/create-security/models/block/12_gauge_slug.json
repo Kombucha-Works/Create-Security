@@ -1,0 +1,21 @@
+{
+	"format_version": "1.21.11",
+	"textures": {
+		"0": "create-security:item/12_gauge_slug",
+		"particle": "create-security:item/12_gauge_slug"
+	},
+	"elements": [
+		{
+			"from": [8, 7, 7],
+			"to": [12, 9, 9],
+			"faces": {
+				"north": {"uv": [5, 10, 7, 14], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [5, 13, 7, 15], "texture": "#0"},
+				"south": {"uv": [7, 14, 5, 10], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [5, 10, 7, 12], "texture": "#0"},
+				"up": {"uv": [5, 14, 7, 10], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [5, 14, 7, 10], "rotation": 90, "texture": "#0"}
+			}
+		}
+	]
+}

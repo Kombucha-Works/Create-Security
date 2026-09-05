@@ -29,4 +29,3 @@ public class CreateSecurityPonderIndex {
         PonderRegistry.addStoryBoard(new PonderStoryBoardEntry(board, CreateSecurity.MOD_ID, schematicPath, component));
     }
 }
-

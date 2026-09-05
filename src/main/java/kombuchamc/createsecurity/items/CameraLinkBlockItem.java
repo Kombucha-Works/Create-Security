@@ -26,4 +26,3 @@ public class CameraLinkBlockItem extends BlockItem {
         return result;
     }
 }
-

@@ -294,4 +294,3 @@ public final class CameraDisplayGroup {
         return pos.getX() * right.getOffsetX() + pos.getZ() * right.getOffsetZ();
     }
 }
-

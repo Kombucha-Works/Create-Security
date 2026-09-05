@@ -153,4 +153,3 @@ public class PlayerListScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
     }
 }
-

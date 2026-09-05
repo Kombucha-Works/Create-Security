@@ -74,4 +74,3 @@ public abstract class GameRendererProjMixin {
         return player.nauseaIntensity;
     }
 }
-

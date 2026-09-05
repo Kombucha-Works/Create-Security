@@ -167,6 +167,12 @@ public class CameraBlock extends BlockWithEntity implements BlockEntityProvider 
                     player.sendMessage(Text.translatable("message.create-security.not_camera_owner").formatted(Formatting.RED), true);
                     return ActionResult.FAIL;
                 }
+                if (player.isSneaking() && camera.getPortableDisplayId() != null) {
+                    camera.setPortableDisplayId(null);
+                    player.sendMessage(
+                            Text.translatable("message.create-security.portable_force_unbound"), true);
+                    return ActionResult.SUCCESS;
+                }
                 player.openHandledScreen(camera);
             }
         }
@@ -204,4 +210,3 @@ public class CameraBlock extends BlockWithEntity implements BlockEntityProvider 
         return getWeakRedstonePower(state, world, pos, direction);
     }
 }
-

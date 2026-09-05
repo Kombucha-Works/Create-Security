@@ -3,6 +3,7 @@ package kombuchamc.createsecurity.block;
 import kombuchamc.createsecurity.config.CSConfigs;
 import kombuchamc.createsecurity.items.RegisterModItems;
 import kombuchamc.createsecurity.network.ModPackets;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -30,33 +31,62 @@ import java.util.List;
 
 public final class KeycardReaderPlacement {
 
+    @Nullable
+    public static java.util.function.BiPredicate<net.minecraft.world.BlockView, BlockPos> CLIENT_LOOKUP;
+
     private KeycardReaderPlacement() {}
 
+    public static boolean hasReader(net.minecraft.world.WorldAccess world, BlockPos pos) {
+        if (world instanceof ServerWorld serverWorld) return readerPosFor(serverWorld, pos) != null;
+        if (world instanceof World client && client.isClient && CLIENT_LOOKUP != null) {
+            return CLIENT_LOOKUP.test(client, pos);
+        }
+        return false;
+    }
+
     public static boolean isHoldingReader(PlayerEntity player) {
-        return player.getMainHandStack().isOf(RegisterModItems.KEYCARD_READER)
-                || player.getOffHandStack().isOf(RegisterModItems.KEYCARD_READER);
+        return kindOf(player.getMainHandStack()) != null || kindOf(player.getOffHandStack()) != null;
+    }
+
+    @Nullable
+    public static LockKind kindOf(ItemStack stack) {
+        if (stack.isOf(RegisterModItems.KEYCARD_READER)) return LockKind.KEYCARD;
+        if (stack.isOf(RegisterModItems.CODE_LOCK)) return LockKind.CODE;
+        return null;
+    }
+
+    public static net.minecraft.item.Item itemFor(LockKind kind) {
+        return kind == LockKind.CODE ? RegisterModItems.CODE_LOCK : RegisterModItems.KEYCARD_READER;
+    }
+
+    private static Block blockFor(LockKind kind) {
+        return kind == LockKind.CODE ? RegisterModBlocks.CODE_LOCK : RegisterModBlocks.KEYCARD_READER;
     }
 
     public static boolean isMountableSurface(WorldView world, BlockPos pos, Direction face) {
         if (!KeycardReaderBlock.isSupport(world.getBlockState(pos))) return false;
         if (!KeycardReaderGeometry.mountFaces(world, pos).contains(face)) return false;
         if (KeycardReaderGeometry.fitsInsideHost(KeycardReaderGeometry.hostBox(world, pos), face)) return true;
-        return world.getBlockState(pos.offset(face)).isReplaceable();
+        for (BlockPos cell : KeycardReaderGeometry.panelCells(world, pos, face)) {
+            if (!world.getBlockState(cell).isSolidBlock(world, cell)) return true;
+        }
+        return false;
     }
 
     public static BlockState mountState(Direction face) {
-        return mountState(face, false);
+        return mountState(face, false, LockKind.KEYCARD);
     }
 
-    public static BlockState mountState(Direction face, boolean armed) {
-        return RegisterModBlocks.KEYCARD_READER.getDefaultState()
+    public static BlockState mountState(Direction face, boolean armed, LockKind kind) {
+        return blockFor(kind).getDefaultState()
                 .with(KeycardReaderBlock.FACING, face)
                 .with(KeycardReaderBlock.ARMED, armed);
     }
 
     public static ActionResult tryPlace(PlayerEntity player, World world, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
-        if (!stack.isOf(RegisterModItems.KEYCARD_READER)) return ActionResult.PASS;
+        LockKind kind = kindOf(stack);
+        if (kind == null) return ActionResult.PASS;
         if (!(world instanceof ServerWorld serverWorld)) return ActionResult.PASS;
 
         BlockPos clicked = hit.getBlockPos();
@@ -67,8 +97,8 @@ public final class KeycardReaderPlacement {
         if (readerPosFor(serverWorld, clicked) != null) return ActionResult.PASS;
 
         BlockPos pos = KeycardReaderGeometry.hostPos(world, clicked);
-        KeycardReaderStore.get(serverWorld).add(pos, player.getUuid());
-        ModPackets.broadcastKeycardReaderUpdate(serverWorld, pos, true, false);
+        KeycardReaderStore.get(serverWorld).add(pos, player.getUuid(), kind);
+        ModPackets.broadcastKeycardReaderUpdate(serverWorld, pos, true, false, kind);
 
         world.playSound(null, pos, SoundEvents.BLOCK_METAL_PLACE, SoundCategory.BLOCKS, 1f, 0.9f);
         world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
@@ -83,6 +113,12 @@ public final class KeycardReaderPlacement {
         if (store.has(host)) return host;
         BlockPos partner = KeycardReaderGeometry.partner(world, host);
         return partner != null && store.has(partner) ? partner : null;
+    }
+
+    public static boolean isLocked(net.minecraft.world.World world, BlockPos pos) {
+        if (!(world instanceof ServerWorld serverWorld)) return false;
+        BlockPos reader = readerPosFor(serverWorld, pos);
+        return reader != null && KeycardReaderStore.get(serverWorld).isArmed(reader);
     }
 
     @Nullable
@@ -119,36 +155,37 @@ public final class KeycardReaderPlacement {
     public static boolean removeAndDrop(ServerWorld world, BlockPos pos, @Nullable PlayerEntity player) {
         KeycardReaderStore.Entry entry = KeycardReaderStore.get(world).remove(pos);
         if (entry == null) return false;
-        ModPackets.broadcastKeycardReaderUpdate(world, pos, false, false);
+        ModPackets.broadcastKeycardReaderUpdate(world, pos, false, false, entry.kind());
 
         List<Direction> faces = KeycardReaderGeometry.mountFaces(world, pos);
-        spawnBreakParticles(world, pos, faces, entry.isArmed());
+        spawnBreakParticles(world, pos, faces, entry.isArmed(), entry.kind());
 
         if (player == null || !player.getAbilities().creativeMode) {
             Vec3d drop = faces.isEmpty()
                     ? Vec3d.ofCenter(pos)
                     : KeycardReaderGeometry.surfaceAnchor(world, pos, faces.get(0), 0.3);
             ItemScatterer.spawn(world, drop.x, drop.y, drop.z,
-                    new ItemStack(RegisterModItems.KEYCARD_READER));
+                    new ItemStack(itemFor(entry.kind())));
         }
         world.playSound(null, pos, SoundEvents.BLOCK_METAL_BREAK, SoundCategory.BLOCKS, 0.8f, 1.1f);
         return true;
     }
 
     private static void spawnBreakParticles(ServerWorld world, BlockPos pos, List<Direction> faces,
-                                            boolean armed) {
+                                            boolean armed, LockKind kind) {
         if (faces.isEmpty()) {
-            emitPanelParticles(world, Vec3d.ofCenter(pos), Direction.NORTH, armed);
+            emitPanelParticles(world, Vec3d.ofCenter(pos), Direction.NORTH, armed, kind);
             return;
         }
         for (Direction face : faces) {
             emitPanelParticles(world, KeycardReaderGeometry.surfaceAnchor(
-                    world, pos, face, KeycardReaderGeometry.DEPTH / 2), face, armed);
+                    world, pos, face, KeycardReaderGeometry.DEPTH / 2), face, armed, kind);
         }
     }
 
-    private static void emitPanelParticles(ServerWorld world, Vec3d center, Direction face, boolean armed) {
-        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, mountState(face, armed)),
+    private static void emitPanelParticles(ServerWorld world, Vec3d center, Direction face,
+                                           boolean armed, LockKind kind) {
+        world.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, mountState(face, armed, kind)),
                 center.x, center.y, center.z, 12, 0.09, 0.12, 0.09, 0.02);
     }
 
@@ -180,11 +217,11 @@ public final class KeycardReaderPlacement {
             if (!host.equals(pos)) {
                 KeycardReaderStore store = KeycardReaderStore.get(world);
                 store.remove(pos);
-                ModPackets.broadcastKeycardReaderUpdate(world, pos, false, false);
+                ModPackets.broadcastKeycardReaderUpdate(world, pos, false, false, entry.kind());
                 if (!store.has(host)) {
-                    store.add(host, entry.owner());
-                    store.setCard(host, entry.cardId());
-                    ModPackets.broadcastKeycardReaderUpdate(world, host, true, entry.isArmed());
+                    store.add(host, entry.owner(), entry.kind());
+                    store.setSecret(host, entry.secret());
+                    ModPackets.broadcastKeycardReaderUpdate(world, host, true, entry.isArmed(), entry.kind());
                 }
             }
         }

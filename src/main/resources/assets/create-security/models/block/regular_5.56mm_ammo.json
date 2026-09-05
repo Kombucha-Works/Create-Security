@@ -1,0 +1,6 @@
+{
+  "parent": "create-security:block/5.56mm",
+  "textures": {
+    "0": "create-security:item/regular_5.56mm_ammo"
+  }
+}

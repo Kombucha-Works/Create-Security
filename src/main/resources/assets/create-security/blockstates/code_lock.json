@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "armed=false,facing=north": {
+      "model": "create-security:block/code_lock"
+    },
+    "armed=true,facing=north": {
+      "model": "create-security:block/code_lock_armed"
+    },
+    "armed=false,facing=east": {
+      "model": "create-security:block/code_lock",
+      "y": 90
+    },
+    "armed=true,facing=east": {
+      "model": "create-security:block/code_lock_armed",
+      "y": 90
+    },
+    "armed=false,facing=south": {
+      "model": "create-security:block/code_lock",
+      "y": 180
+    },
+    "armed=true,facing=south": {
+      "model": "create-security:block/code_lock_armed",
+      "y": 180
+    },
+    "armed=false,facing=west": {
+      "model": "create-security:block/code_lock",
+      "y": 270
+    },
+    "armed=true,facing=west": {
+      "model": "create-security:block/code_lock_armed",
+      "y": 270
+    },
+    "armed=false,facing=up": {
+      "model": "create-security:block/code_lock",
+      "x": 270
+    },
+    "armed=true,facing=up": {
+      "model": "create-security:block/code_lock_armed",
+      "x": 270
+    },
+    "armed=false,facing=down": {
+      "model": "create-security:block/code_lock",
+      "x": 90
+    },
+    "armed=true,facing=down": {
+      "model": "create-security:block/code_lock_armed",
+      "x": 90
+    }
+  }
+}

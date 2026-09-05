@@ -16,4 +16,3 @@ public interface GameRendererAccessor {
     @Accessor("camera")
     void setCameraField(Camera camera);
 }
-

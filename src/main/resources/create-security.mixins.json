@@ -18,7 +18,18 @@
 		"BuiltChunkStorageAccessor",
 		"LivingEntityRendererLabelMixin",
 		"ClientInteractionReaderMixin",
-		"ClientBlockBreakReaderMixin"
+		"ClientBlockBreakReaderMixin",
+		"ClientObsidianBreakMixin",
+		"TexturedRenderLayersObsidianMixin",
+		"BuiltinModelItemRendererObsidianMixin",
+		"BuiltinModelItemRendererReaderMixin"
+	],
+	"mixins": [
+		"BlockEntityTypeAccessor",
+		"ChestBlockLockMixin",
+		"ShulkerBoxReaderMixin",
+		"ItemNameReaderMixin",
+		"TrapdoorBlockInvoker"
 	],
 	"injectors": {
 		"defaultRequire": 1

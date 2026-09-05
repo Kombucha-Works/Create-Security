@@ -11,4 +11,3 @@ public class PlayerListScreenFactory {
                 PlayerListItem.getNames(stack), PlayerListItem.isIncludeMode(stack)));
     }
 }
-

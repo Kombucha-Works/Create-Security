@@ -37,10 +37,10 @@ public final class KeycardReaderRenderer {
 
             Vec3d cam = context.camera().getPos();
             float tickDelta = context.tickDelta();
-            KeycardReaderClientStore.forEachNear(cam, RENDER_RANGE, (pos, armed) -> {
+            KeycardReaderClientStore.forEachNear(cam, RENDER_RANGE, (pos, mounted) -> {
                 if (!KeycardReaderBlock.isSupport(client.world.getBlockState(pos))) return;
                 for (Direction face : KeycardReaderGeometry.mountFaces(client.world, pos)) {
-                    renderPanel(client, matrices, consumers, cam, pos, face, armed, tickDelta);
+                    renderPanel(client, matrices, consumers, cam, pos, face, mounted, tickDelta);
                 }
             });
         });
@@ -48,11 +48,12 @@ public final class KeycardReaderRenderer {
 
     private static void renderPanel(MinecraftClient client, MatrixStack matrices,
                                     VertexConsumerProvider consumers, Vec3d cam,
-                                    BlockPos pos, Direction face, boolean armed, float tickDelta) {
+                                    BlockPos pos, Direction face,
+                                    KeycardReaderClientStore.Mounted mounted, float tickDelta) {
         Vec3d origin = KeycardReaderGeometry.renderOrigin(client.world, pos, face);
         BlockPos lightPos = BlockPos.ofFloored(KeycardReaderGeometry.surfaceAnchor(
                 client.world, pos, face, KeycardReaderGeometry.DEPTH + 0.01));
-        BlockState state = KeycardReaderPlacement.mountState(face, armed);
+        BlockState state = KeycardReaderPlacement.mountState(face, mounted.lit(), mounted.kind());
 
         matrices.push();
         float lid = lidProgress(client, pos, tickDelta);

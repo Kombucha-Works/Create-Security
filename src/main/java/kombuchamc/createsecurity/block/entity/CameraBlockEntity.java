@@ -385,4 +385,3 @@ public class CameraBlockEntity extends BlockEntity implements ExtendedScreenHand
         return false;
     }
 }
-

@@ -101,4 +101,3 @@ public class CameraScreen extends HandledScreen<CameraScreenHandler> {
         }
     }
 }
-

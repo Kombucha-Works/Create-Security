@@ -1,0 +1,110 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "loops": 5,
+  "results": [
+    {
+      "item": "create-security:rocket_barrel"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        },
+        {
+          "item": "create:sturdy_sheet"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        },
+        {
+          "item": "minecraft:ghast_tear"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        },
+        {
+          "item": "minecraft:dragon_breath"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        },
+        {
+          "item": "minecraft:echo_shard"
+        }
+      ],
+      "results": [
+        {
+          "item": "create-security:incomplete_rocket_barrel"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "create-security:incomplete_rocket_barrel"
+  }
+}

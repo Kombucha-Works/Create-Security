@@ -1,0 +1,31 @@
+{
+	"textures": {
+		"0": "create-security:block/turret"
+	},
+	"elements": [
+		{
+			"from": [5, 16, 1],
+			"to": [11, 21, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 16, 1]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 5], "texture": "#0"},
+				"east": {"uv": [6, 0, 8, 5], "texture": "#0"},
+				"south": {"uv": [0, 0, 6, 5], "texture": "#0"},
+				"west": {"uv": [6, 0, 8, 5], "texture": "#0"},
+				"up": {"uv": [0, 5, 6, 7], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 16, 13],
+			"to": [11, 21, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 16, 13]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 5], "texture": "#0"},
+				"east": {"uv": [6, 0, 8, 5], "texture": "#0"},
+				"south": {"uv": [0, 0, 6, 5], "texture": "#0"},
+				"west": {"uv": [6, 0, 8, 5], "texture": "#0"},
+				"up": {"uv": [0, 5, 6, 7], "texture": "#0"}
+			}
+		}
+	]
+}

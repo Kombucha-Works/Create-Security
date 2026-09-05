@@ -54,4 +54,3 @@ public class CameraBlockRenderer extends GeoBlockRenderer<CameraBlockEntity> {
                 packedLight, packedOverlay, red, green, blue, alpha);
     }
 }
-

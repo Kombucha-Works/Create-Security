@@ -182,4 +182,3 @@ public class CameraScenes {
         scene.idle(140);
     }
 }
-

@@ -16,4 +16,3 @@ public interface MinecraftClientAccessor {
     @Accessor("framebuffer")
     void setFramebufferField(Framebuffer fb);
 }
-

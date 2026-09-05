@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOO",
+    "OXO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "create:powdered_obsidian"
+    },
+    "X": {
+      "item": "minecraft:barrel"
+    }
+  },
+  "result": {
+    "item": "create-security:obsidian_barrel",
+    "count": 1
+  }
+}

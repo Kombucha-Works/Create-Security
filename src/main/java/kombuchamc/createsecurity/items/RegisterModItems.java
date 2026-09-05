@@ -23,10 +23,65 @@ public class RegisterModItems {
             new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
     public static final Item INCOMPLETE_CAMERA_LINK = registerItem("incomplete_camera_link",
             new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
+    public static final Item INCOMPLETE_TURRET = registerItem("incomplete_turret",
+            new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
+    public static final Item INCOMPLETE_SHOTGUN_BARREL = registerItem("incomplete_shotgun_barrel",
+            new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
+    public static final Item INCOMPLETE_MINIGUN_BARREL = registerItem("incomplete_minigun_barrel",
+            new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
+    public static final Item INCOMPLETE_AUTOMATIC_BARREL = registerItem("incomplete_automatic_barrel",
+            new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
+    public static final Item INCOMPLETE_ROCKET_BARREL = registerItem("incomplete_rocket_barrel",
+            new com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem(new FabricItemSettings()));
     public static final Item FISHEYE_LENS = registerItem("fisheye_lens", new FisheyeLensItem(new FabricItemSettings()));
     public static final Item KEYCARD = registerItem("keycard", new KeycardItem(new FabricItemSettings().maxCount(1)));
+    public static final Item UNIVERSAL_KEYCARD = registerItem("universal_keycard",
+            new UniversalKeycardItem(new FabricItemSettings().maxCount(1)
+                    .rarity(net.minecraft.util.Rarity.EPIC)));
     public static final Item KEYCARD_READER = registerItem("keycard_reader",
             new TooltipItem(new FabricItemSettings(), "tooltip.create-security.keycard_reader"));
+    public static final Item CODE_LOCK = registerItem("code_lock",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.code_lock"));
+
+    public static final Item SHOTGUN_BARREL = registerItem("shotgun_barrel",
+            new TooltipItem(new FabricItemSettings().maxCount(1),
+                    "tooltip.create-security.shotgun_barrel"));
+
+    public static final Item MINIGUN_BARREL = registerItem("minigun_barrel",
+            new TooltipItem(new FabricItemSettings().maxCount(1),
+                    "tooltip.create-security.minigun_barrel"));
+
+    public static final Item AUTOMATIC_BARREL = registerItem("automatic_barrel",
+            new TooltipItem(new FabricItemSettings().maxCount(1),
+                    "tooltip.create-security.automatic_barrel"));
+
+    public static final Item REGULAR_556_AMMO = registerItem("regular_5.56mm_ammo",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.regular_5.56mm_ammo"));
+
+    public static final Item INCENDIARY_BUCKSHOT_12G = registerItem("12_gauge_incendiary_buckshot",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.12_gauge_incendiary_buckshot"));
+
+    public static final Item HE_ROCKET = registerItem("he_rocket",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.he_rocket"));
+
+    public static final Item SLUG_12G = registerItem("12_gauge_slug",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.12_gauge_slug"));
+
+    public static final Item BUCKSHOT_12G = registerItem("12_gauge_buckshot",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.12_gauge_buckshot"));
+
+    public static final Item INCENDIARY_556_AMMO = registerItem("incendiary_5.56mm_ammo",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.incendiary_5.56mm_ammo"));
+
+    public static final Item REGULAR_762_AMMO = registerItem("regular_7.62x51mm_ammo",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.regular_7.62x51mm_ammo"));
+
+    public static final Item ROCKET_ROUND = registerItem("rocket",
+            new TooltipItem(new FabricItemSettings(), "tooltip.create-security.rocket"));
+
+    public static final Item ROCKET_BARREL = registerItem("rocket_barrel",
+            new TooltipItem(new FabricItemSettings().maxCount(1),
+                    "tooltip.create-security.rocket_barrel"));
 
     private static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries) {
 
@@ -46,4 +101,3 @@ public class RegisterModItems {
 
     }
 }
-

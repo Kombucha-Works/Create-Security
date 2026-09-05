@@ -131,4 +131,3 @@ public class PlayerListItem extends Item {
         return result;
     }
 }
-

@@ -23,8 +23,14 @@ public class TurretDisguiseModel extends ForwardingBakedModel {
 
     private static final float SOCKET_MAX_Y = 6 / 16f;
 
-    private static final RenderMaterial EMISSIVE =
-            RendererAccess.INSTANCE.getRenderer().materialFinder().emissive(true).find();
+    private static RenderMaterial emissive;
+
+    private static RenderMaterial emissive() {
+        if (emissive == null && RendererAccess.INSTANCE.hasRenderer()) {
+            emissive = RendererAccess.INSTANCE.getRenderer().materialFinder().emissive(true).find();
+        }
+        return emissive;
+    }
 
     public TurretDisguiseModel(BakedModel wrapped) {
         this.wrapped = wrapped;
@@ -46,10 +52,10 @@ public class TurretDisguiseModel extends ForwardingBakedModel {
 
         BakedModel disguise = MinecraftClient.getInstance().getBlockRenderManager().getModel(material);
 
-        boolean glowing = material.hasEmissiveLighting(world, pos);
+        RenderMaterial glow = material.hasEmissiveLighting(world, pos) ? emissive() : null;
         context.pushTransform(quad -> {
             if (quad.nominalFace() == Direction.DOWN) return false;
-            if (glowing) quad.material(EMISSIVE);
+            if (glow != null) quad.material(glow);
             return true;
         });
         disguise.emitBlockQuads(world, material, pos, randomSupplier, context);

@@ -15,7 +15,7 @@ public abstract class GameRendererHandMixin {
     @Inject(method = "renderHand", at = @At("HEAD"), cancellable = true)
     private void createsecurity$skipHandDuringCameraRender(MatrixStack matrices, Camera camera,
                                                             float tickDelta, CallbackInfo ci) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             ci.cancel();
         }
     }

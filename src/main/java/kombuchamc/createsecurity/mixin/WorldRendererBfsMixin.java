@@ -23,6 +23,7 @@ public abstract class WorldRendererBfsMixin {
                                                    boolean hasForcedFrustum, boolean spectator,
                                                    CallbackInfo ci) {
         if (!CameraViewManager.isInsideInnerRender()) return;
+        if (kombuchamc.createsecurity.client.compat.RenderCompat.SODIUM) return;
         Frustum coverFrustum = new Frustum(frustum).coverBoxAroundSetPosition(8);
 
         WorldRenderer self = (WorldRenderer) (Object) this;
@@ -50,7 +51,7 @@ public abstract class WorldRendererBfsMixin {
 
     @Inject(method = "scheduleTerrainUpdate", at = @At("HEAD"), cancellable = true)
     private void createsecurity$suppressTerrainUpdate(CallbackInfo ci) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             ci.cancel();
         }
     }

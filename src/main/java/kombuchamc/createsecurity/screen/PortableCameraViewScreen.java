@@ -164,7 +164,7 @@ public class PortableCameraViewScreen extends Screen {
 
         PortableCameraViewEntry entry = entries.get(index);
         SimpleFramebuffer fb = CameraViewManager.getFramebuffer(entry.pos());
-        boolean inRange = CameraViewManager.isCameraInClientRange(entry.pos());
+        boolean inRange = CameraViewManager.canShowFeed(entry.pos());
         if (inRange && fb != null && fb.getColorAttachment() > 0) {
             drawFramebuffer(context, fb.getColorAttachment(), x0, y0, x0 + imgW, y0 + imgH);
             int nameTex = CameraViewManager.getNameOverlayTexture(entry.pos());

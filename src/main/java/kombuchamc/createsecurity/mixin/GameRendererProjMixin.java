@@ -35,14 +35,14 @@ public abstract class GameRendererProjMixin {
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true, require = 0)
     private void createsecurity$skipBobView(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             ci.cancel();
         }
     }
 
     @Inject(method = "shouldRenderBlockOutline", at = @At("HEAD"), cancellable = true)
     private void createsecurity$noBlockOutlineDuringInnerRender(CallbackInfoReturnable<Boolean> cir) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             cir.setReturnValue(false);
         }
     }
@@ -50,7 +50,7 @@ public abstract class GameRendererProjMixin {
     @Inject(method = {"bobViewWhenHurt", "tiltViewWhenHurt", "applyDamageTilt"},
             at = @At("HEAD"), cancellable = true, require = 0)
     private void createsecurity$skipHurtBob(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             ci.cancel();
         }
     }
@@ -61,7 +61,7 @@ public abstract class GameRendererProjMixin {
               require = 0)
     private float createsecurity$noPrevNausea(ClientPlayerEntity player) {
 
-        if (CameraViewManager.isInsideInnerRender() || player == null) return 0f;
+        if (CameraViewManager.suppressExtras() || player == null) return 0f;
         return player.prevNauseaIntensity;
     }
 
@@ -70,7 +70,7 @@ public abstract class GameRendererProjMixin {
                        target = "Lnet/minecraft/client/network/ClientPlayerEntity;nauseaIntensity:F"),
               require = 0)
     private float createsecurity$noCurrentNausea(ClientPlayerEntity player) {
-        if (CameraViewManager.isInsideInnerRender() || player == null) return 0f;
+        if (CameraViewManager.suppressExtras() || player == null) return 0f;
         return player.nauseaIntensity;
     }
 }

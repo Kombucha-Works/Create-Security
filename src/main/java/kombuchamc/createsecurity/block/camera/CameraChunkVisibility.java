@@ -28,8 +28,17 @@ public final class CameraChunkVisibility {
     private static final Direction[] DIRECTIONS = Direction.values();
     private static final long REFRESH_MS = 500;
 
+    public static int feedViewDistance(int rendererViewDistance) {
+        int configured = kombuchamc.createsecurity.config.CSConfigs.cameraRenderDistance();
+        return configured <= 0 ? rendererViewDistance : Math.min(configured, rendererViewDistance);
+    }
+
     public static int feedViewDistance() {
-        return kombuchamc.createsecurity.config.CSConfigs.cameraRenderDistance();
+        MinecraftClient client = MinecraftClient.getInstance();
+        int renderer = client.worldRenderer == null
+                ? client.options.getClampedViewDistance()
+                : ((WorldRendererAccessor) client.worldRenderer).getViewDistanceField();
+        return feedViewDistance(renderer);
     }
 
     private record Result(List<Object> chunkInfos, ChunkBuilder.BuiltChunk[] storageIdentity, long timestamp) {}
@@ -112,7 +121,7 @@ public final class CameraChunkVisibility {
         WorldRendererAccessor acc = (WorldRendererAccessor) wr;
         BuiltChunkStorage storage = acc.getChunkStorage();
         BuiltChunkStorageAccessor storageAcc = (BuiltChunkStorageAccessor) storage;
-        int viewDistance = Math.min(acc.getViewDistanceField(), feedViewDistance());
+        int viewDistance = feedViewDistance(acc.getViewDistanceField());
         boolean culling = client.chunkCullingEnabled;
 
         Queue<Node> queue = new ArrayDeque<>();

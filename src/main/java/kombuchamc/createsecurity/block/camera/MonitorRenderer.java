@@ -77,7 +77,7 @@ public class MonitorRenderer implements BlockEntityRenderer<MonitorBlockEntity> 
             immediate.draw();
         }
 
-        if (linkedCamera != null && !CameraViewManager.isCameraInClientRange(linkedCamera)) {
+        if (linkedCamera != null && !CameraViewManager.canShowFeed(linkedCamera)) {
             RenderSystem.setShaderTexture(0, DIRT_TEXTURE);
             drawBoundTexturedQuad(matrices, facing, MonitorBlock.IMG_X_LOW, MonitorBlock.IMG_X_HIGH,
                     MonitorBlock.IMG_Y_LOW, MonitorBlock.IMG_Y_HIGH, IMG_EPS,
@@ -100,12 +100,28 @@ public class MonitorRenderer implements BlockEntityRenderer<MonitorBlockEntity> 
             return;
         }
 
-        RenderSystem.setShaderTexture(0, colorTex);
-        drawBoundTexturedQuad(matrices, facing, MonitorBlock.IMG_X_LOW, MonitorBlock.IMG_X_HIGH,
-                MonitorBlock.IMG_Y_LOW, MonitorBlock.IMG_Y_HIGH, IMG_EPS,
-                1f, 0f, MonitorBlock.FEED_V_LOW, MonitorBlock.FEED_V_HIGH);
+        if (CameraViewManager.deferPanels(linkedCamera)) {
+            Matrix4f pose = new Matrix4f(matrices.peek().getPositionMatrix());
+            BlockPos deferCamera = linkedCamera;
+            CameraViewManager.queuePanel(() -> {
+                drawDeferredQuad(pose, facing, MonitorBlock.IMG_X_LOW, MonitorBlock.IMG_X_HIGH,
+                        MonitorBlock.IMG_Y_LOW, MonitorBlock.IMG_Y_HIGH, IMG_EPS,
+                        1f, 0f, MonitorBlock.FEED_V_LOW, MonitorBlock.FEED_V_HIGH, colorTex, false);
+                int deferredName = CameraViewManager.getNameOverlayTexture(deferCamera);
+                if (deferredName > 0) {
+                    drawDeferredQuad(pose, facing, MonitorBlock.IMG_X_LOW, MonitorBlock.IMG_X_HIGH,
+                            MonitorBlock.IMG_Y_LOW, MonitorBlock.IMG_Y_HIGH, NAME_EPS,
+                            1f, 0f, 0f, 1f, deferredName, true);
+                }
+            });
+        } else {
+            RenderSystem.setShaderTexture(0, colorTex);
+            drawBoundTexturedQuad(matrices, facing, MonitorBlock.IMG_X_LOW, MonitorBlock.IMG_X_HIGH,
+                    MonitorBlock.IMG_Y_LOW, MonitorBlock.IMG_Y_HIGH, IMG_EPS,
+                    1f, 0f, MonitorBlock.FEED_V_LOW, MonitorBlock.FEED_V_HIGH);
 
-        drawNameOverlay(matrices, facing, linkedCamera);
+            drawNameOverlay(matrices, facing, linkedCamera);
+        }
 
         if (be.getCameraCount() > 1) {
             drawCycleArrows(matrices, facing, pos);
@@ -114,6 +130,34 @@ public class MonitorRenderer implements BlockEntityRenderer<MonitorBlockEntity> 
         if (be.getCameraLabel() != null) {
             drawLabel(matrices, vertexConsumers, facing, be.getCameraLabel());
         }
+    }
+
+    private static void drawDeferredQuad(Matrix4f mat, Direction facing,
+                                         float xLow, float xHigh, float yLow, float yHigh, float eps,
+                                         float u0, float u1, float v0, float v1,
+                                         int tex, boolean blend) {
+        computeQuadVerts(facing, xLow, xHigh, yLow, yHigh, eps);
+        RenderSystem.disableCull();
+        RenderSystem.enableDepthTest();
+        if (blend) {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+        } else {
+            RenderSystem.disableBlend();
+        }
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShaderTexture(0, tex);
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+        Tessellator tess = Tessellator.getInstance();
+        BufferBuilder buf = tess.getBuffer();
+        buf.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        US[0] = u0; US[1] = u1; US[2] = u1; US[3] = u0;
+        VS[0] = v0; VS[1] = v0; VS[2] = v1; VS[3] = v1;
+        for (int i = 0; i < 4; i++) {
+            buf.vertex(mat, VX[i], VY[i], VZ[i]).texture(US[i], VS[i]).next();
+        }
+        tess.draw();
+        RenderSystem.enableCull();
     }
 
     private static void drawNameOverlay(MatrixStack matrices, Direction facing, BlockPos cameraPos) {

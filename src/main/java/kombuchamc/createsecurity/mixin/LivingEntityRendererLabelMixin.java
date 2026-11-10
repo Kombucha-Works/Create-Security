@@ -16,7 +16,7 @@ public abstract class LivingEntityRendererLabelMixin {
             at = @At("HEAD"), cancellable = true)
     private void createsecurity$forceLabelInCameraFeed(LivingEntity entity,
                                                        CallbackInfoReturnable<Boolean> cir) {
-        if (CameraViewManager.isInsideInnerRender() && entity instanceof AbstractClientPlayerEntity) {
+        if (CameraViewManager.suppressExtras() && entity instanceof AbstractClientPlayerEntity) {
             cir.setReturnValue(false);
         }
     }

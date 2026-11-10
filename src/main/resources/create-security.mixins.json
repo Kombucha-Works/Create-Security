@@ -22,14 +22,18 @@
 		"ClientObsidianBreakMixin",
 		"TexturedRenderLayersObsidianMixin",
 		"BuiltinModelItemRendererObsidianMixin",
-		"BuiltinModelItemRendererReaderMixin"
+		"BuiltinModelItemRendererReaderMixin",
+		"ParticleFeedLightMixin",
+		"ParticleManagerAccessor"
 	],
 	"mixins": [
 		"BlockEntityTypeAccessor",
 		"ChestBlockLockMixin",
 		"ShulkerBoxReaderMixin",
 		"ItemNameReaderMixin",
-		"TrapdoorBlockInvoker"
+		"TrapdoorBlockInvoker",
+		"ServerWorldFeedMixin",
+		"ChunkHolderLightMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

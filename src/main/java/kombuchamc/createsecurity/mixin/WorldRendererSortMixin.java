@@ -11,6 +11,6 @@ public abstract class WorldRendererSortMixin {
 
     @ModifyConstant(method = "renderLayer", constant = @Constant(intValue = 15), require = 0)
     private int createsecurity$noSortDuringInnerRender(int original) {
-        return CameraViewManager.isInsideInnerRender() ? 0 : original;
+        return CameraViewManager.suppressExtras() ? 0 : original;
     }
 }

@@ -5,7 +5,10 @@ import net.minecraft.client.render.BuiltChunkStorage;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.render.Frustum;
+import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.option.CloudRenderMode;
 import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -14,6 +17,51 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(WorldRenderer.class)
 public interface WorldRendererAccessor {
+
+    @Accessor("cloudsDirty")
+    boolean getCloudsDirty();
+
+    @Accessor("cloudsDirty")
+    void setCloudsDirty(boolean dirty);
+
+    @Accessor("cloudsBuffer")
+    VertexBuffer getCloudsBuffer();
+
+    @Mutable
+    @Accessor("cloudsBuffer")
+    void setCloudsBuffer(VertexBuffer buffer);
+
+    @Accessor("lastCloudsBlockX")
+    int getLastCloudsBlockX();
+
+    @Accessor("lastCloudsBlockX")
+    void setLastCloudsBlockX(int value);
+
+    @Accessor("lastCloudsBlockY")
+    int getLastCloudsBlockY();
+
+    @Accessor("lastCloudsBlockY")
+    void setLastCloudsBlockY(int value);
+
+    @Accessor("lastCloudsBlockZ")
+    int getLastCloudsBlockZ();
+
+    @Accessor("lastCloudsBlockZ")
+    void setLastCloudsBlockZ(int value);
+
+    @Accessor("lastCloudsColor")
+    Vec3d getLastCloudsColor();
+
+    @Mutable
+    @Accessor("lastCloudsColor")
+    void setLastCloudsColor(Vec3d color);
+
+    @Accessor("lastCloudRenderMode")
+    CloudRenderMode getLastCloudRenderMode();
+
+    @Mutable
+    @Accessor("lastCloudRenderMode")
+    void setLastCloudRenderMode(CloudRenderMode mode);
 
     @Accessor("chunkInfos")
     ObjectArrayList<?> getChunkInfos();

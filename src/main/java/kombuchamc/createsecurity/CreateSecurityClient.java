@@ -1,16 +1,17 @@
 package kombuchamc.createsecurity;
 
-import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
+import net.createmod.catnip.config.ui.BaseConfigScreen;
 import kombuchamc.createsecurity.block.RegisterModBlocks;
 import kombuchamc.createsecurity.block.entity.ModBlockEntities;
 import kombuchamc.createsecurity.config.CSConfigs;
 import kombuchamc.createsecurity.block.camera.CameraBlockRenderer;
 import kombuchamc.createsecurity.block.camera.CameraDisplayRenderer;
 import kombuchamc.createsecurity.network.ModClientPackets;
-import kombuchamc.createsecurity.ponder.CreateSecurityPonderIndex;
+import kombuchamc.createsecurity.ponder.CreateSecurityPonderPlugin;
 import kombuchamc.createsecurity.screen.CameraLinkScreen;
 import kombuchamc.createsecurity.screen.CameraScreen;
 import kombuchamc.createsecurity.screen.ModScreenHandlers;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -18,11 +19,32 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
 public class CreateSecurityClient implements ClientModInitializer {
+
+    private static boolean warnedTemporalEffects;
+
+    private static void warnAboutTemporalEffects(net.minecraft.client.MinecraftClient client) {
+        if (client.player == null
+                || !kombuchamc.createsecurity.client.compat.RenderCompat.shadedFeedsActive()) {
+            warnedTemporalEffects = false;
+            return;
+        }
+        if (warnedTemporalEffects) return;
+        warnedTemporalEffects = true;
+        client.player.sendMessage(
+                net.minecraft.text.Text.translatable("message.create-security.shaded_feeds_temporal"),false);
+    }
+
     @Override
     public void onInitializeClient() {
+        kombuchamc.createsecurity.client.compat.RenderCompat.init();
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            warnAboutTemporalEffects(client);
+            if (client.world == null || client.isPaused()) return;
+            kombuchamc.createsecurity.client.camera.RemoteParticles.tick();
+        });
         BaseConfigScreen.setDefaultActionFor(CreateSecurity.MOD_ID, screen -> screen
                 .withSpecs(null, CSConfigs.SPEC, null)
-                .withTitles("Client Config", "Settings", "Server Config"));
+                .withButtonLabels("Client Config", "Settings", "Server Config"));
         BlockRenderLayerMap.INSTANCE.putBlock(RegisterModBlocks.ALARM, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(RegisterModBlocks.TURRET, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(RegisterModBlocks.TURRET_MAST_LOWER, RenderLayer.getCutout());
@@ -83,8 +105,9 @@ public class CreateSecurityClient implements ClientModInitializer {
                 (handler, client) -> {
                     kombuchamc.createsecurity.client.KeycardReaderClientStore.clear();
                     kombuchamc.createsecurity.client.ObsidianOwnerClientStore.clear();
+                    kombuchamc.createsecurity.client.camera.RemoteChunkRequests.reset();
                 });
         ModClientPackets.registerClientPackets();
-        CreateSecurityPonderIndex.register();
+        PonderIndex.addPlugin(new CreateSecurityPonderPlugin());
     }
 }

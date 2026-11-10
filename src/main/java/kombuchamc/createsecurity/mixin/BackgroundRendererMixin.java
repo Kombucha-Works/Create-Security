@@ -19,7 +19,7 @@ public abstract class BackgroundRendererMixin {
               at = @At(value = "INVOKE",
                        target = "Lnet/minecraft/client/render/Camera;getFocusedEntity()Lnet/minecraft/entity/Entity;"))
     private static Entity createsecurity$nullFocusedEntityForFog(Camera camera) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             return null;
         }
         return camera.getFocusedEntity();
@@ -29,7 +29,7 @@ public abstract class BackgroundRendererMixin {
               at = @At(value = "INVOKE",
                        target = "Lnet/minecraft/client/render/Camera;getFocusedEntity()Lnet/minecraft/entity/Entity;"))
     private static Entity createsecurity$nullFocusedEntityForBackground(Camera camera) {
-        if (CameraViewManager.isInsideInnerRender()) {
+        if (CameraViewManager.suppressExtras()) {
             return null;
         }
         return camera.getFocusedEntity();
@@ -39,7 +39,7 @@ public abstract class BackgroundRendererMixin {
     private static void createsecurity$clampCameraFeedFog(
             Camera camera, BackgroundRenderer.FogType fogType, float viewDistance,
             boolean thickFog, float tickDelta, CallbackInfo ci) {
-        if (!CameraViewManager.isInsideInnerRender()) return;
+        if (!CameraViewManager.suppressExtras()) return;
         if (fogType != BackgroundRenderer.FogType.FOG_TERRAIN) return;
         float capBlocks = CameraChunkVisibility.feedViewDistance() * 16f;
         if (RenderSystem.getShaderFogEnd() > capBlocks) {

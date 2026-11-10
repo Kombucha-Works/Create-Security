@@ -37,7 +37,7 @@ public class TurretRenderer implements BlockEntityRenderer<TurretBlockEntity> {
         matrices.push();
         matrices.translate(0.5, 0, 0.5);
         matrices.multiply(RotationAxis.POSITIVE_Y.rotation(
-                KineticBlockEntityRenderer.getAngleForTe(turret, turret.getPos(), Direction.Axis.Y)));
+                KineticBlockEntityRenderer.getAngleForBe(turret, turret.getPos(), Direction.Axis.Y)));
         matrices.translate(-0.5, 0, -0.5);
         MinecraftClient.getInstance().getBlockRenderManager().renderBlockAsEntity(
                 RegisterModBlocks.TURRET_SHAFT.getDefaultState(), matrices, vertexConsumers, light,

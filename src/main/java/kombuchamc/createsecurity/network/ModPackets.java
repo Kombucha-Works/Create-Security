@@ -28,6 +28,27 @@ public class ModPackets {
     public static final Identifier OPEN_PORTABLE_VIEW =
             new Identifier(CreateSecurity.MOD_ID, "open_portable_view");
 
+    public static final Identifier REMOTE_CHUNK_WATCH =
+            new Identifier(CreateSecurity.MOD_ID, "remote_chunk_watch");
+
+    public static final Identifier REMOTE_CHUNK_DATA =
+            new Identifier(CreateSecurity.MOD_ID, "remote_chunk_data");
+
+    public static final Identifier REMOTE_CHUNK_CLEAR =
+            new Identifier(CreateSecurity.MOD_ID, "remote_chunk_clear");
+
+    public static final Identifier REMOTE_ENTITIES =
+            new Identifier(CreateSecurity.MOD_ID, "remote_entities");
+
+    public static final Identifier REMOTE_BLOCK_UPDATE =
+            new Identifier(CreateSecurity.MOD_ID, "remote_block_update");
+
+    public static final Identifier REMOTE_LIGHT_UPDATE =
+            new Identifier(CreateSecurity.MOD_ID, "remote_light_update");
+
+    public static final Identifier REMOTE_PARTICLES =
+            new Identifier(CreateSecurity.MOD_ID, "remote_particles");
+
     public static final Identifier TURRET_SLIDER =
             new Identifier(CreateSecurity.MOD_ID, "turret_slider");
 
@@ -57,6 +78,136 @@ public class ModPackets {
         buf.writeBlockPos(pos);
         buf.writeBoolean(enabled);
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(TOGGLE_DETECTION, buf);
+    }
+
+    public static void sendRemoteChunkWatch(BlockPos cameraPos, boolean watching) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        buf.writeBoolean(watching);
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(REMOTE_CHUNK_WATCH, buf);
+    }
+
+    public static void sendRemoteChunk(ServerPlayerEntity player, BlockPos cameraPos,
+                                       net.minecraft.world.chunk.WorldChunk chunk) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        buf.writeVarInt(chunk.getPos().x);
+        buf.writeVarInt(chunk.getPos().z);
+        new net.minecraft.network.packet.s2c.play.ChunkData(chunk).write(buf);
+        new net.minecraft.network.packet.s2c.play.LightData(chunk.getPos(),
+                chunk.getWorld().getLightingProvider(), null, null).write(buf);
+        ServerPlayNetworking.send(player, REMOTE_CHUNK_DATA, buf);
+    }
+
+    public static void sendRemoteParticles(ServerPlayerEntity player, BlockPos cameraPos,
+                                           java.util.List<net.minecraft.network.packet.s2c.play.ParticleS2CPacket>
+                                                   events) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        buf.writeVarInt(events.size());
+        for (net.minecraft.network.packet.s2c.play.ParticleS2CPacket event : events) event.write(buf);
+        ServerPlayNetworking.send(player, REMOTE_PARTICLES, buf);
+    }
+
+    public static void sendRemoteBlockUpdates(ServerPlayerEntity player, BlockPos cameraPos,
+                                              ServerWorld world, java.util.List<BlockPos> positions) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        buf.writeVarInt(positions.size());
+        for (BlockPos pos : positions) {
+            net.minecraft.block.BlockState state = world.getBlockState(pos);
+            buf.writeBlockPos(pos);
+            buf.writeVarInt(net.minecraft.block.Block.getRawIdFromState(state));
+            BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+            buf.writeBoolean(blockEntity != null);
+            if (blockEntity != null) {
+                buf.writeVarInt(net.minecraft.registry.Registries.BLOCK_ENTITY_TYPE
+                        .getRawId(blockEntity.getType()));
+                buf.writeNbt(blockEntity.toInitialChunkDataNbt());
+            }
+        }
+        ServerPlayNetworking.send(player, REMOTE_BLOCK_UPDATE, buf);
+    }
+
+    public static void sendRemoteLight(ServerPlayerEntity player, BlockPos cameraPos,
+                                       ServerWorld world, java.util.List<Long> sections) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        buf.writeVarInt(sections.size());
+        net.minecraft.world.chunk.light.LightingProvider provider = world.getLightingProvider();
+        for (long key : sections) {
+            net.minecraft.util.math.ChunkSectionPos sectionPos =
+                    net.minecraft.util.math.ChunkSectionPos.from(key);
+            buf.writeLong(key);
+            writeNibbles(buf, provider.get(net.minecraft.world.LightType.SKY).getLightSection(sectionPos));
+            writeNibbles(buf, provider.get(net.minecraft.world.LightType.BLOCK).getLightSection(sectionPos));
+        }
+        ServerPlayNetworking.send(player, REMOTE_LIGHT_UPDATE, buf);
+    }
+
+    private static void writeNibbles(PacketByteBuf buf,
+                                     @Nullable net.minecraft.world.chunk.ChunkNibbleArray nibbles) {
+        if (nibbles == null) {
+            buf.writeByte(0);
+            return;
+        }
+        if (nibbles.isUninitialized()) {
+            buf.writeByte(1);
+            return;
+        }
+        buf.writeByte(2);
+        buf.writeBytes(nibbles.asByteArray().clone());
+    }
+
+    public static void sendRemoteEntities(ServerPlayerEntity player, BlockPos cameraPos,
+                                          java.util.List<net.minecraft.entity.Entity> entities,
+                                          java.util.function.Predicate<net.minecraft.entity.Entity> full) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        buf.writeVarInt(entities.size());
+        for (net.minecraft.entity.Entity entity : entities) {
+            net.minecraft.entity.LivingEntity living =
+                    entity instanceof net.minecraft.entity.LivingEntity cast ? cast : null;
+            buf.writeVarInt(entity.getId());
+            buf.writeDouble(entity.getX());
+            buf.writeDouble(entity.getY());
+            buf.writeDouble(entity.getZ());
+            buf.writeFloat(entity.getYaw());
+            buf.writeFloat(entity.getPitch());
+            buf.writeFloat(entity.getHeadYaw());
+            buf.writeFloat(living != null ? living.bodyYaw : entity.getYaw());
+
+            boolean sendFull = full.test(entity);
+            buf.writeBoolean(sendFull);
+            if (!sendFull) continue;
+
+            buf.writeVarInt(net.minecraft.registry.Registries.ENTITY_TYPE.getRawId(entity.getType()));
+            buf.writeUuid(entity.getUuid());
+            boolean isPlayer = entity instanceof net.minecraft.entity.player.PlayerEntity;
+            buf.writeBoolean(isPlayer);
+            if (isPlayer) {
+                buf.writeString(((net.minecraft.entity.player.PlayerEntity) entity).getGameProfile().getName());
+            }
+            java.util.List<net.minecraft.entity.data.DataTracker.SerializedEntry<?>> tracked =
+                    entity.getDataTracker().getChangedEntries();
+            if (tracked != null) {
+                for (net.minecraft.entity.data.DataTracker.SerializedEntry<?> entry : tracked) entry.write(buf);
+            }
+            buf.writeByte(255);
+            buf.writeBoolean(living != null);
+            if (living != null) {
+                for (net.minecraft.entity.EquipmentSlot slot : net.minecraft.entity.EquipmentSlot.values()) {
+                    buf.writeItemStack(living.getEquippedStack(slot));
+                }
+            }
+        }
+        ServerPlayNetworking.send(player, REMOTE_ENTITIES, buf);
+    }
+
+    public static void sendRemoteChunkClear(ServerPlayerEntity player, BlockPos cameraPos) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(cameraPos);
+        ServerPlayNetworking.send(player, REMOTE_CHUNK_CLEAR, buf);
     }
 
     public static void sendTurretSlider(int syncId, int slider, int value) {
@@ -135,6 +286,19 @@ public class ModPackets {
                     }
                 }
         );
+
+        ServerPlayNetworking.registerGlobalReceiver(REMOTE_CHUNK_WATCH,
+                (server, player, handler, buf, responseSender) -> {
+                    BlockPos cameraPos = buf.readBlockPos();
+                    boolean watching = buf.readBoolean();
+                    server.execute(() -> {
+                        if (watching) {
+                            kombuchamc.createsecurity.block.camera.RemoteChunkFeed.watch(player, cameraPos);
+                        } else {
+                            kombuchamc.createsecurity.block.camera.RemoteChunkFeed.unwatch(player, cameraPos);
+                        }
+                    });
+                });
 
         ServerPlayNetworking.registerGlobalReceiver(TURRET_SLIDER,
                 (server, player, handler, buf, responseSender) -> {

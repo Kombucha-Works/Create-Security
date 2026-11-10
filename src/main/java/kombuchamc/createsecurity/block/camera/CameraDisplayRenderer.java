@@ -39,6 +39,7 @@ public class CameraDisplayRenderer implements BlockEntityRenderer<CameraDisplayB
     private static final float[] VZ = new float[4];
     private static final float[] US = new float[4];
     private static final float[] VS = new float[4];
+    private static BlockPos deferTarget;
 
     public CameraDisplayRenderer(BlockEntityRendererFactory.Context ctx) {}
 
@@ -93,12 +94,13 @@ public class CameraDisplayRenderer implements BlockEntityRenderer<CameraDisplayB
         float yHigh = state.get(CameraDisplay.UP)    ? 1f - BEZEL : 1f;
 
         BlockPos linkedCamera = be.getLinkedCameraPos();
+        deferTarget = linkedCamera;
         if (linkedCamera == null) {
             drawColorQuad(matrices, facing, xLow, xHigh, yLow, yHigh, 0f, 0f, 0f);
             return;
         }
 
-        if (!CameraViewManager.isCameraInClientRange(linkedCamera)) {
+        if (!CameraViewManager.canShowFeed(linkedCamera)) {
             CameraDisplayGroup rangeGroup = be.getGroup();
             if (rangeGroup != null && rangeGroup.valid && !rangeGroup.active) {
                 drawColorQuad(matrices, facing, xLow, xHigh, yLow, yHigh, 0f, 0f, 0f);
@@ -200,6 +202,13 @@ public class CameraDisplayRenderer implements BlockEntityRenderer<CameraDisplayB
         matrices.translate(facing.getOffsetX() * 0.002f,
                            facing.getOffsetY() * 0.002f,
                            facing.getOffsetZ() * 0.002f);
+        if (CameraViewManager.deferPanels(cameraPos)) {
+            Matrix4f poseCopy = new Matrix4f(matrices.peek().getPositionMatrix());
+            CameraViewManager.queuePanel(() -> drawQuadFromMatrix(poseCopy, facing,
+                    xLow, xHigh, yLow, yHigh, u0, u1, v0, v1, nameTex, true));
+            matrices.pop();
+            return;
+        }
         computeQuadVerts(facing, xLow, xHigh, yLow, yHigh, VX, VY, VZ);
         Matrix4f mat = matrices.peek().getPositionMatrix();
 
@@ -514,8 +523,42 @@ public class CameraDisplayRenderer implements BlockEntityRenderer<CameraDisplayB
                                           float yLow, float yHigh,
                                           float u0, float u1, float v0, float v1,
                                           int colorTex) {
+        if (deferTarget != null && CameraViewManager.deferPanels(deferTarget)) {
+            Matrix4f pose = new Matrix4f(matrices.peek().getPositionMatrix());
+            CameraViewManager.queuePanel(() -> drawQuadFromMatrix(pose, facing,
+                    xLow, xHigh, yLow, yHigh, u0, u1, v0, v1, colorTex, false));
+            return;
+        }
         RenderSystem.setShaderTexture(0, colorTex);
         drawBoundTexturedQuad(matrices, facing, xLow, xHigh, yLow, yHigh, u0, u1, v0, v1);
+    }
+
+    private static void drawQuadFromMatrix(Matrix4f mat, Direction facing,
+                                           float xLow, float xHigh, float yLow, float yHigh,
+                                           float u0, float u1, float v0, float v1,
+                                           int tex, boolean blend) {
+        computeQuadVerts(facing, xLow, xHigh, yLow, yHigh, VX, VY, VZ);
+        RenderSystem.disableCull();
+        RenderSystem.enableDepthTest();
+        if (blend) {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+        } else {
+            RenderSystem.disableBlend();
+        }
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+        RenderSystem.setShaderTexture(0, tex);
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+        Tessellator tess = Tessellator.getInstance();
+        BufferBuilder buf = tess.getBuffer();
+        buf.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        US[0] = u0; US[1] = u1; US[2] = u1; US[3] = u0;
+        VS[0] = v0; VS[1] = v0; VS[2] = v1; VS[3] = v1;
+        for (int i = 0; i < 4; i++) {
+            buf.vertex(mat, VX[i], VY[i], VZ[i]).texture(US[i], VS[i]).next();
+        }
+        tess.draw();
+        RenderSystem.enableCull();
     }
 
     private static void drawTexturedQuad(MatrixStack matrices, Direction facing,

@@ -125,16 +125,25 @@ public class CreateSecurity implements ModInitializer {
 		net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_WORLD_TICK.register(world -> {
 			flushDeniedBreaks();
 			kombuchamc.createsecurity.block.KeycardReaderAttachment.clearPending();
+			kombuchamc.createsecurity.block.camera.RemoteChunkFeed.tick(world);
 			kombuchamc.createsecurity.block.KeycardReaderDoors.tick(world);
 			kombuchamc.createsecurity.block.KeycardReaderLights.tick(world);
 			if (world.getTime() % 20 == 0) kombuchamc.createsecurity.block.KeycardReaderPlacement.validate(world);
 		});
+
+		net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.DISCONNECT.register(
+				(handler, server) -> kombuchamc.createsecurity.block.camera.RemoteChunkFeed
+						.unwatchAll(handler.player));
 
 		net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register(
 				(handler, sender, server) -> {
 					ModPackets.sendKeycardReaderFullSync(handler.player);
 					ModPackets.sendObsidianOwnerFullSync(handler.player);
 				});
+
+		net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD
+				.register((player, origin, destination) -> kombuchamc.createsecurity.block.camera
+						.RemoteChunkFeed.unwatchAll(player));
 
 		net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD
 				.register((player, origin, destination) -> {

@@ -161,7 +161,7 @@ A lot of blocks also have Ponder scenes, so if you get stuck, just hold W while 
 | Minecraft                                                 | 1.20.1      |
 | Fabric Loader                                             | 0.18.0+     |
 | [Fabric API](https://modrinth.com/mod/fabric-api)                                            | Latest      |
-| [Create (Fabric)](https://modrinth.com/mod/create-fabric) | Any Version |
+| [Create (Fabric)](https://modrinth.com/mod/create-fabric) | Create Fabric 6 and above (excl. versions 1.0.0 & 1.1.0 which support 5.1j) |
 | [GeckoLib](https://modrinth.com/mod/geckolib)             | Any Version |
 
 </div>
@@ -175,19 +175,13 @@ A lot of blocks also have Ponder scenes, so if you get stuck, just hold W while 
 <details>
 <summary><b>Does it work with shaders?</b></summary>
 
-No, our mod hooks deep into the rendering pipeline of Minecraft, and our current renderer conflicts with Iris' renderer, which causes either a White or Black screen. We are addressing this issue, and we will hopefully manage to fix it.
+From version 1.2.0 our mod will work with shaders and have better compatibility with sodium, but currently isn't compatible with shaders. We are currently working on in and we will manage to fix it.
+
 </details>
 <details>
 <summary><b>Does it lag?</b></summary>
 
-Each visible display renders an extra view of the world, so a giant wall of monitors is not free. A handful of screens is fine on most PCs. If you build a 50 screen control room, that is on you. 
-
-</details>
-
-<details>
-<summary><b>Do turrets grief my base?</b></summary>
-
-Only the Rocket Barrel does. Rockets and HE Rockets explode on impact and break blocks, so keep them pointed away from anything you like. Every other barrel leaves the world alone, apart from glass, which all bullets shatter.
+Each visible display renders an extra view of the world, so a giant wall of monitors is not free. A handful of screens is fine on most PCs. If you build a 50 screen control room, that is on you.
 
 </details>
 
@@ -199,7 +193,7 @@ Check, in order: it needs rotational force from a shaft or motor underneath, con
 </details>
 
 <details>
-<summary><b>Can I use it in my modpack?</b></summary>
+<summary><b>Can I use the mod in my modpack?</b></summary>
 
 Yes! We love seeing the mod in modpacks. Free modpacks on platforms we officially publish on (currently just Modrinth) are fine without asking. Anything else needs written permission; see the <a href="https://github.com/Kombucha-Works/Create-Security/blob/main/LICENSE">license</a> for details.
 

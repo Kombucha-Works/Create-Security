@@ -48,6 +48,7 @@
   "tooltip.create-security.player_list": "Use to _edit_ the name list and _mode_/nPlace inside of the _camera gui player list slot_/nto make the camera _track_ specific _players_",
   "tooltip.create-security.player_list_mode_include": "Mode: Include (only listed players trigger)",
   "tooltip.create-security.player_list_mode_exclude": "Mode: Exclude (everyone except listed triggers)",
+  "message.create-security.shaded_feeds_temporal": "§4Shaded camera feeds are on.\n Which isn't compatible with Temporal Filtering (TAA) and Motion Blur. They can make your screen flicker. Turn those two off in the shader pack settings, or turn shadedCameraFeeds off in the Create: Security config.",
   "message.create-security.frequency_in_use": "This frequency is already in use by another camera!",
   "message.create-security.not_camera_owner": "You don't own this camera!",
   "message.create-security.not_camera_link_owner": "You don't own this camera link!",

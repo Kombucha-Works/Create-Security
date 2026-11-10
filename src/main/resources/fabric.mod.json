@@ -6,7 +6,7 @@
 	"description": "A mod that adds CCTV and a lot more security things.",
 	"authors": [
 		"SuaveHickory500",
-        "Hardstone"
+		"Hardstone"
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/create-security-cctv",
@@ -28,17 +28,18 @@
 		]
 	},
 	"mixins": [
-		"create-security.mixins.json"
+		"create-security.mixins.json",
+		"create-security.compat.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.18.0",
 		"minecraft": "1.20.1",
 		"java": ">=17",
 		"fabric-api": "*",
-        "create": "*",
-		"geckolib": "*",
-		"forgeconfigapiport": "*"
-
+		"create": ">=6.0.7",
+		"ponder": "*",
+		"geckolib": ">=4.3.1",
+		"forgeconfigapiport": ">=8.0.0"
 	},
 	"custom": {
 		"modmenu": {

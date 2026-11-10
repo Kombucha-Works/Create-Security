@@ -1,11 +1,13 @@
 package kombuchamc.createsecurity.block;
 
+import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import kombuchamc.createsecurity.CreateSecurity;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,14 +15,11 @@ import net.minecraft.world.World;
 public class TurretArmInteraction {
 
     public static void register() {
-        ArmInteractionPointType.register(new TurretPointType(new Identifier(CreateSecurity.MOD_ID, "turret")));
+        Registry.register(CreateBuiltInRegistries.ARM_INTERACTION_POINT_TYPE,
+                new Identifier(CreateSecurity.MOD_ID, "turret"), new TurretPointType());
     }
 
     public static class TurretPointType extends ArmInteractionPointType {
-
-        public TurretPointType(Identifier id) {
-            super(id);
-        }
 
         @Override
         public boolean canCreatePoint(World world, BlockPos pos, BlockState state) {

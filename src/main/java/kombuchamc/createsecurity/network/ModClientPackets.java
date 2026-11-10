@@ -15,6 +15,64 @@ import java.util.List;
 
 public class ModClientPackets {
     public static void registerClientPackets() {
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.REMOTE_CHUNK_DATA,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos cameraPos = buf.readBlockPos();
+                    int chunkX = buf.readVarInt();
+                    int chunkZ = buf.readVarInt();
+                    net.minecraft.network.packet.s2c.play.ChunkData chunkData =
+                            new net.minecraft.network.packet.s2c.play.ChunkData(buf, chunkX, chunkZ);
+                    net.minecraft.network.packet.s2c.play.LightData lightData =
+                            new net.minecraft.network.packet.s2c.play.LightData(buf, chunkX, chunkZ);
+                    client.execute(() -> kombuchamc.createsecurity.client.camera.RemoteChunkStore
+                            .accept(cameraPos, chunkX, chunkZ, chunkData, lightData));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.REMOTE_ENTITIES,
+                (client, handler, buf, responseSender) -> {
+                    kombuchamc.createsecurity.client.camera.RemoteEntities.Snapshot snapshot =
+                            kombuchamc.createsecurity.client.camera.RemoteEntities.read(buf);
+                    client.execute(() -> kombuchamc.createsecurity.client.camera.RemoteEntities.apply(snapshot));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.REMOTE_BLOCK_UPDATE,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos cameraPos = buf.readBlockPos();
+                    List<kombuchamc.createsecurity.client.camera.RemoteChunkStore.BlockUpdate> updates =
+                            kombuchamc.createsecurity.client.camera.RemoteChunkStore.readBlockUpdates(buf);
+                    client.execute(() -> kombuchamc.createsecurity.client.camera.RemoteChunkStore
+                            .applyBlockUpdates(cameraPos, updates));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.REMOTE_LIGHT_UPDATE,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos cameraPos = buf.readBlockPos();
+                    List<kombuchamc.createsecurity.client.camera.RemoteChunkStore.LightUpdate> updates =
+                            kombuchamc.createsecurity.client.camera.RemoteChunkStore.readLightUpdates(buf);
+                    client.execute(() -> kombuchamc.createsecurity.client.camera.RemoteChunkStore
+                            .applyLightUpdates(cameraPos, updates));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.REMOTE_PARTICLES,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos cameraPos = buf.readBlockPos();
+                    int count = buf.readVarInt();
+                    List<net.minecraft.network.packet.s2c.play.ParticleS2CPacket> events =
+                            new ArrayList<>(count);
+                    for (int i = 0; i < count; i++) {
+                        events.add(new net.minecraft.network.packet.s2c.play.ParticleS2CPacket(buf));
+                    }
+                    client.execute(() -> kombuchamc.createsecurity.client.camera.RemoteParticles
+                            .spawn(cameraPos, events));
+                });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModPackets.REMOTE_CHUNK_CLEAR,
+                (client, handler, buf, responseSender) -> {
+                    BlockPos cameraPos = buf.readBlockPos();
+                    client.execute(() -> kombuchamc.createsecurity.client.camera.RemoteChunkStore
+                            .clear(cameraPos));
+                });
+
         ClientPlayNetworking.registerGlobalReceiver(ModPackets.DISPLAY_LINK_SYNC,
                 (client, handler, buf, responseSender) -> {
                     BlockPos displayPos = buf.readBlockPos();
